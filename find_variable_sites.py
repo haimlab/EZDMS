@@ -150,8 +150,10 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
     a single sequnce fasta file 
 
     output - list of list of sites 
-    the begning and end site of each varable region 
+    all sites of each varable region 
     """
+
+    #returns a list of all continuous regions with nonstandard nucleotides
 
     list_non_standard_nucleotide_region = []
 
@@ -244,7 +246,7 @@ def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
     return list_fasta_sequence 
 
 def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
-    #This transforms the codon list to a list of amino acids 
+    #This transforms the codon list to a list of amino acids
 
     amino_acid_list = []
 
@@ -346,33 +348,33 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
 
     #main driver code 
 
-    ref_fasta_sequence = fasta_to_single_line_string(input_fasta_file,is_file_fasta)
+    ref_fasta_sequence = fasta_to_single_line_string(input_fasta_file,is_file_fasta) #Converts fasta file into single line
 
-    list_non_standard_nucleotide_region = find_variable_sites(ref_fasta_sequence,variable_sites_number)
+    list_non_standard_nucleotide_region = find_variable_sites(ref_fasta_sequence,variable_sites_number) #returns a list of all continuous regions with nonstandard nucleotides
 
-    region_marker_list = find_guide_sequences(ref_fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime,distance_3_prime)
+    region_marker_list = find_guide_sequences(ref_fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime,distance_3_prime) #Find guide sequences
 
-    sequence_list = get_fastq_sequence_list(in_put_fastq,is_file_fastq)
+    sequence_list = get_fastq_sequence_list(in_put_fastq,is_file_fastq) #Preprocess fastq file into individual list of sequences
 
-    fasta_line_list = [n[1] for n in fastq_to_fasta_sequence(sequence_list,phread_score)]
+    fasta_line_list = [n[1] for n in fastq_to_fasta_sequence(sequence_list,phread_score)] #Converts the each fastq sequence into a fasta sequence based on phread score 
 
-    codon_list = find_codon_list(region_marker_list,fasta_line_list)
+    codon_list = find_codon_list(region_marker_list,fasta_line_list) #Find guide sequences
 
-    amino_acid_list = convert_codons_to_amino_acid_list(codon_list,variable_sites_number)
+    amino_acid_list = convert_codons_to_amino_acid_list(codon_list,variable_sites_number) #This transforms the codon list to a list of amino acids
 
-    amino_dic = load_amino_dic(variable_sites_number)
+    amino_dic = load_amino_dic(variable_sites_number) #Adds the amino acids counts to the dictionary 
 
-    populate_amino_dic(amino_acid_list,amino_dic)
+    populate_amino_dic(amino_acid_list,amino_dic) #Initializes the amino acid dictionary with empty values 
 
-    reverse_complement_region_marker_list = reverse_complement_region_marker(region_marker_list)
+    reverse_complement_region_marker_list = reverse_complement_region_marker(region_marker_list) #Reverses the region marker sequences
 
-    reverse_codon_list = find_codon_list(reverse_complement_region_marker_list,fasta_line_list)
+    reverse_codon_list = find_codon_list(reverse_complement_region_marker_list,fasta_line_list) #Find guide sequences
     
-    reverse_codon_list = reverse_complement_nucleotide(reverse_codon_list)
+    reverse_codon_list = reverse_complement_nucleotide(reverse_codon_list) #Reverses the nucleotide sequences
 
-    reverse_amino_acid_list = convert_codons_to_amino_acid_list(reverse_codon_list,variable_sites_number)
+    reverse_amino_acid_list = convert_codons_to_amino_acid_list(reverse_codon_list,variable_sites_number) #This transforms the codon list to a list of amino acids
 
-    populate_amino_dic(reverse_amino_acid_list,amino_dic)
+    populate_amino_dic(reverse_amino_acid_list,amino_dic) #Initializes the amino acid dictionary with empty values 
 
     if len(out_file) > 0:
         print("run")
@@ -394,6 +396,22 @@ if __name__ == '__main__':
     five_prime = args.five_prime
     three_prime = args.three_prime
     variable_sites = args.variable
+    # ========================================================================================================
+
+
+
+
+    # Check Inputs are valid =================================================================================
+    
+    assert type(input_fasta_file) == str
+    assert type(in_put_fastq) == str
+    assert type(out_file) == str
+    assert type(phread_score) == int
+    assert type(five_prime) == int
+    assert type(three_prime) == int
+    assert type(variable_sites) == int
+    
+
     # ========================================================================================================
     
 
