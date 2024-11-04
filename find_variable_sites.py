@@ -45,7 +45,6 @@ def init_argparse():
     if len(argv)==1:
         parser.print_help(stderr)
         
-
     return parser
 
 
@@ -72,8 +71,6 @@ def fasta_to_single_line_string(input_fasta,is_file = True):
             fasta_sequence += strip_line.upper() 
         else:
             raise FastaSequenceError(f"Unknown character in input fasta {line}")
-
-        
 
     return fasta_sequence
 
@@ -116,6 +113,7 @@ def reverse_complement(nucleotide):
             y = "C"
 
         reverse_complement.append(y)
+
     reverse_complement.reverse()
     return(reverse_complement)
 
@@ -177,17 +175,15 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 Default_distance_from_region = 8
 
 def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime = Default_distance_from_region,distance_3_prime = Default_distance_from_region):
-    #Find guide sequences 
+    #Find guide sequences
 
     region_marker_list = []
 
     for region in list_non_standard_nucleotide_region:
         five_prime = fasta_sequence[(region[0] - (distance_5_prime )):region[0]]
         three_prime = fasta_sequence[(region[-1] +1 ):(region[-1] + distance_3_prime+1)]
-        length_region = len(region)  
-
+        length_region = len(region)
         region_marker = (five_prime,three_prime,length_region)
-
         region_marker_list.append(region_marker)
 
     return region_marker_list
@@ -198,7 +194,7 @@ def find_codon_list(region_marker_list,fasta_line_list):
     codon_list = []
     for fasta_line in fasta_line_list:
         sub_codon_list = []
-        for index,region_marker in enumerate(region_marker_list):
+        for region_marker in region_marker_list:
             variable_region = "." * region_marker[-1]
             search_template = f"{region_marker[0] + variable_region + region_marker[1]}"
 
@@ -206,11 +202,11 @@ def find_codon_list(region_marker_list,fasta_line_list):
             if len(look_for) > 0:
                 sub_codon_list.append(look_for[0][len(region_marker[0]):-len(region_marker[1])])
         codon_list.append(sub_codon_list)
-        
+
     return codon_list
 
 def get_fastq_sequence_list(in_put_fastq,is_file = True):
-    #Preprocess fastq file into individual list of sequences  
+    #Preprocess fastq file into individual list of sequences
 
     sequence_list  = []
     if is_file:
@@ -235,6 +231,7 @@ def get_fastq_sequence_list(in_put_fastq,is_file = True):
 
 def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
     #Converts the each fastq sequence into a fasta sequence based on phread score 
+
     list_fasta_sequence = []
 
     for sequence in sequence_list:
@@ -254,8 +251,10 @@ def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
     for codons in codon_list:
         if len(codons) == variable_sites_number:
             amino_pair = []
+
             for codon in codons:
                 amino_pair.append(translate_codon(codon))
+
             if len(amino_pair) == variable_sites_number and "-" not in amino_pair:
                 amino_acid_list.append(amino_pair)
 
@@ -277,7 +276,6 @@ def load_amino_dic(variable_sites_number=2):
         for j in range(variable_sites_number):
 
             amino_len = len(amino_acids)
-
             m = ((count) % (amino_len ** (j+1))) / (amino_len ** (j))
             key += f"{amino_acids[int(m)][0]}\t"
             count -= m
@@ -299,15 +297,18 @@ def write_out_file(out_file,amino_dic,region_marker_list):
     #Print out file as a excel or CSV
 
     try:
+        import pandas as pd
         print('module pandas run')
 
         out_file = f'{out_file}.xlsx'
-        import pandas as pd
+        
         columns=[]
         for index,item in enumerate(region_marker_list):
             columns.append(f"Site_{index+1}:" + str(item[0]))
+
         columns.append("amino_acid_counter")
         amino = []
+
         for key in amino_dic.keys():
             key_list = key.split("\t")
             key_list[-1] = amino_dic[key]
@@ -315,23 +316,30 @@ def write_out_file(out_file,amino_dic,region_marker_list):
 
         df = pd.DataFrame(list(amino), columns=columns)
         df.to_excel(out_file)
+
         return out_file
 
     except:
         print('module pandas not found. changing output to CSV instead of excel')
+
         out_file = out_file + ".csv"
+
         print(out_file)
+
         with open(out_file,"w") as f:
             for index,item in enumerate(region_marker_list):
                 f.write(f"Site_{index+1}:" + str(item[0]))
                 f.write(",")
+
             f.write("amino_acid_counter")
             f.write("\n")
+
             for key in amino_dic .keys():
                 f.write(",".join(key.split("\t")) +str(amino_dic[key]) +"\n")
-        f.close
-        return out_file
 
+        f.close
+
+        return out_file
 
 
 def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_file_fastq = True,phread_score = 20,distance_5_prime = 8,distance_3_prime = 8,variable_sites_number = 2):
@@ -369,10 +377,8 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
     if len(out_file) > 0:
         print("run")
         return write_out_file(out_file,amino_dic,list_non_standard_nucleotide_region)
-
     else:
         return amino_dic
-
 
 
 if __name__ == '__main__':
