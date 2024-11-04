@@ -1,16 +1,16 @@
 import pytest
 
-import FQ_VSearch.find_variable_sites as FVS
+import find_variable_sites as FVS
 
 #test functions 
 
 def test_FastaSequenceError_1():
     with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("FastaSequenceError.fa")
+       FVS.fasta_to_single_line_string("nnktttaattgtggtggcgaatttttctactgtaattcaacacaactgtttaatagtacttggaattttaatggtacttggaatttaacacaatcgaatggtactgaaggaaatgacactatcacactcccctgtagaattaaacaaattataaacnnk\n>",False)
 
 def test_FastaSequenceErrorChar_2():
     with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("FastaSequenceErrorChar.fa")
+       FVS.fasta_to_single_line_string("nnkttaattgtggtggcga-atttttctactgtaattcaacacaactgtttaatagtacttggaattttaatggtacttggaatttaacacaatcgaatggtactgaaggaaatgacactatcacactcccctgtagaattaaaaaattataaacnnk",False)
 
 def test_FastaSequenceError_string_3():
     with pytest.raises(FVS.FastaSequenceError):
@@ -74,7 +74,7 @@ def test_reverse_complement_region_marker_12():
 
 def test_convert_codons_to_amino_acid_list_13():
     reverse_codon_list = [['CGA', 'ATT'], [], [], ['CAT', 'CTT']]
-    assert [['R', 'I'],['H', 'L']] == FVS.convert_codons_to_amino_acid_list(reverse_codon_list)
+    assert [['R', 'I'],['H', 'L']] == FVS.convert_codons_to_amino_acid_list(reverse_codon_list,2)
 
 def test_translate_codon_14():
     assert "R" == FVS.translate_codon("CGA")
@@ -95,7 +95,7 @@ def test_find_codon_list_16():
 
 def test_convert_codons_to_amino_acid_list_17():
     codon_list = [["CGA","ATT"]]
-    assert [['R', 'I']] == FVS.convert_codons_to_amino_acid_list(codon_list)
+    assert [['R', 'I']] == FVS.convert_codons_to_amino_acid_list(codon_list,2)
 
 def test_reverse_complement_nucleotide_19():
     reverse_codon_list = [['CGA', 'ATT']]

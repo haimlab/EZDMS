@@ -234,7 +234,7 @@ def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
 
     return list_fasta_sequence 
 
-def convert_codons_to_amino_acid_list(codon_list,variable_sites_number = 2):
+def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
     amino_acid_list = []
 
     for codons in codon_list:
@@ -242,7 +242,7 @@ def convert_codons_to_amino_acid_list(codon_list,variable_sites_number = 2):
             amino_pair = []
             for codon in codons:
                 amino_pair.append(translate_codon(codon))
-            if len(amino_pair) > 1 and "-" not in amino_pair:
+            if len(amino_pair) == variable_sites_number and "-" not in amino_pair:
                 amino_acid_list.append(amino_pair)
 
     return amino_acid_list
@@ -376,5 +376,5 @@ if __name__ == '__main__':
     print(f"Five prime base pair match:\t{five_prime}")
     print(f"Three prime base pair match:\t{three_prime}")
     print(f"Variable sites:\t{variable_sites}")
-    out_file,amino_dic,list_non_standard_nucleotide_region = main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
-    write_out_file(out_file,amino_dic,list_non_standard_nucleotide_region)
+    print(main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites))
+    
