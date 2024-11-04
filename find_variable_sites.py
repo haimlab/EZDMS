@@ -30,14 +30,14 @@ class InstallError(Exception):
     pass
 
 def init_argparse():
+    #Sets up the command line arguments
+
     parser = ArgumentParser(description ='This program creates a list of the amino acid groups found from specified variability sites')
     
     parser.add_argument('fasta', type=str, help='Path to the fasta file:\n', default='input.fasta')
     parser.add_argument('fastq', type=str, help='Path to the fastq file:\n', default='fastq.fastq')
 
     parser.add_argument('-o', '--output', type=str, help='Path to the output file: \tdefault="output"\n', default='output')
-    
-    
     parser.add_argument('-p', '--phread', type=int, help='threshold value to filliter phread score: \tdefault=20\n', default=20)
     parser.add_argument('-5', '--five_prime', type=int, help='distance from variability sites to the 5 prime end of the required match: \tdefault=8\n', default=8)
     parser.add_argument('-3', '--three_prime', type=int, help='distance from variability sites to the 3 prime end of the required match: \tdefault=8\n', default=8)
@@ -50,6 +50,8 @@ def init_argparse():
 
 
 def fasta_to_single_line_string(input_fasta,is_file = True):
+    #Converts fasta file to a single line string
+
     if is_file:
         with open(input_fasta,"r") as open_fasta_file:
 
@@ -76,6 +78,8 @@ def fasta_to_single_line_string(input_fasta,is_file = True):
     return fasta_sequence
 
 def translate_codon(codon):
+    #Takes in a string and maps it to a amino acid in the dictionary 
+
     genetic_code = {
         'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
         'TCT': 'S', 'TCC': 'S', 'TCA': 'S', 'TCG': 'S',
@@ -97,6 +101,8 @@ def translate_codon(codon):
     return genetic_code.get(codon.upper(), '-')
 
 def reverse_complement(nucleotide):
+    #Reverses nucleotides to their complements
+
     reverse_complement = []
     y = '-'
     for x in nucleotide:
@@ -114,6 +120,7 @@ def reverse_complement(nucleotide):
     return(reverse_complement)
 
 def reverse_complement_nucleotide(nucleotide_list):
+    #Reverses the nucleotide sequences 
 
     reverse_nucleotide_list = []
 
@@ -127,6 +134,8 @@ def reverse_complement_nucleotide(nucleotide_list):
 
 
 def reverse_complement_region_marker(region_marker_list):
+    #Reverses the region marker sequences 
+
     reverse_complement_region_marker_list = []
 
     for item in region_marker_list:
@@ -168,6 +177,7 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 Default_distance_from_region = 8
 
 def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime = Default_distance_from_region,distance_3_prime = Default_distance_from_region):
+    #Find guide sequences 
 
     region_marker_list = []
 
@@ -183,13 +193,13 @@ def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,dist
     return region_marker_list
 
 def find_codon_list(region_marker_list,fasta_line_list):
+    #Find guide sequences
+
     codon_list = []
     for fasta_line in fasta_line_list:
         sub_codon_list = []
         for index,region_marker in enumerate(region_marker_list):
             variable_region = "." * region_marker[-1]
-            
-
             search_template = f"{region_marker[0] + variable_region + region_marker[1]}"
 
             look_for = findall(search_template ,fasta_line)
@@ -200,6 +210,8 @@ def find_codon_list(region_marker_list,fasta_line_list):
     return codon_list
 
 def get_fastq_sequence_list(in_put_fastq,is_file = True):
+    #Preprocess fastq file into individual list of sequences  
+
     sequence_list  = []
     if is_file:
         with open(in_put_fastq, 'r') as file:
@@ -222,7 +234,7 @@ def get_fastq_sequence_list(in_put_fastq,is_file = True):
     return sequence_list
 
 def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
-
+    #Converts the each fastq sequence into a fasta sequence based on phread score 
     list_fasta_sequence = []
 
     for sequence in sequence_list:
@@ -235,6 +247,8 @@ def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
     return list_fasta_sequence 
 
 def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
+    #This transforms the codon list to a list of amino acids 
+
     amino_acid_list = []
 
     for codons in codon_list:
@@ -248,6 +262,7 @@ def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
     return amino_acid_list
 
 def load_amino_dic(variable_sites_number=2):
+    #Adds the amino acids counts to the dictionary  
 
     amino_acids = [".",1],["A",2],["C",1],["D",1],["E",1],["F",1],["G",2],["H",1],["I",1],["K",1],["L",3],["M",1],["N",1],["P",2],["Q",1],["R",3],["S",3],["T",2],["V",2],["W",1],["Y",1]
 
@@ -272,6 +287,8 @@ def load_amino_dic(variable_sites_number=2):
     return amino_dic
 
 def populate_amino_dic(amino_acid_list,amino_dic):
+    #Initializes the amino acid dictionary with empty values 
+
     for amino_pair in amino_acid_list:
         key = ""
         for amino in amino_pair:
@@ -279,6 +296,8 @@ def populate_amino_dic(amino_acid_list,amino_dic):
         amino_dic [key] += 1
 
 def write_out_file(out_file,amino_dic,region_marker_list):
+    #Print out file as a excel or CSV
+
     try:
         print('module pandas run')
 
@@ -316,6 +335,8 @@ def write_out_file(out_file,amino_dic,region_marker_list):
 
 
 def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_file_fastq = True,phread_score = 20,distance_5_prime = 8,distance_3_prime = 8,variable_sites_number = 2):
+
+    #main driver code 
 
     ref_fasta_sequence = fasta_to_single_line_string(input_fasta_file,is_file_fasta)
 
@@ -356,10 +377,10 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
 
 if __name__ == '__main__':
 
-
     parser = init_argparse()
     args = parser.parse_args()
 
+    # Inputs ================================================================================================
     input_fasta_file = args.fasta
     in_put_fastq = args.fastq
     out_file = args.output
@@ -367,6 +388,7 @@ if __name__ == '__main__':
     five_prime = args.five_prime
     three_prime = args.three_prime
     variable_sites = args.variable
+    # ========================================================================================================
     
 
     print(f"Settings selected \nInput fasta file:\t{input_fasta_file}")
