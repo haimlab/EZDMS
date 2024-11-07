@@ -15,33 +15,71 @@ output - list of list of sites
 the begning and end site of each varable region 
 
 '''
+# Import necessary libraries
+from argparse import ArgumentParser # For command-line argument parsing
+from re import findall # For regular expression searching
+from sys import argv,stderr # For handling command-line arguments and errors
 
-from argparse import ArgumentParser
-from re import findall
-from sys import argv,stderr
+# Global variable to track errors
+global error_detected
+error_detected = None
 
+# Custom exception classes for error handling
 class FastaSequenceError(Exception):
-    pass
+    global error_detected
+    error_detected = "FastaSequenceError"
 
 class VariableSites(Exception):
-    pass
+    global error_detected
+    error_detected = "VariableSites"
 
 class InstallError(Exception):
-    pass
+    global error_detected
+    error_detected = "InstallError"
+
+error_detected = None
+
+# A decorator function for error handling in the main program flow
+def Error_detection(func):
+    def inner1(*args, **kwargs):
+        returned_value = func(*args, **kwargs)
+        global error_detected
+
+        returned_value = error_detected
+        # Error handling logic
+        if error_detected == None:
+            # getting the returned value
+            try:
+                returned_value = func(*args, **kwargs)
+            except:
+                if error_detected == None:
+                    error_detected = "ERROR.txt"
+                returned_value = Error_out()
+            # returning the value to the original frame
+
+        return returned_value
+        
+    return inner1
+
 
 def init_argparse():
-    #Sets up the command line arguments
-
-    parser = ArgumentParser(description ='This program creates a list of the amino acid groups found from specified variability sites')
+    """
+    Sets up command-line argument parsing for the program.
     
+    Allows users to provide input FASTA and FASTQ files, along with output and various configuration options.
+    """
+
+    # Define command-line arguments
+    parser = ArgumentParser(description ='This program creates a list of the amino acid groups found from specified variability sites')
     parser.add_argument('fasta', type=str, help='Path to the fasta file:\n', default='input.fasta')
     parser.add_argument('fastq', type=str, help='Path to the fastq file:\n', default='fastq.fastq')
-
     parser.add_argument('-o', '--output', type=str, help='Path to the output file: \tdefault="output"\n', default='output')
     parser.add_argument('-p', '--phread', type=int, help='threshold value to filliter phread score: \tdefault=20\n', default=20)
     parser.add_argument('-5', '--five_prime', type=int, help='distance from variability sites to the 5 prime end of the required match: \tdefault=8\n', default=8)
     parser.add_argument('-3', '--three_prime', type=int, help='distance from variability sites to the 3 prime end of the required match: \tdefault=8\n', default=8)
     parser.add_argument('-v', '--variable', type=int, help='number of variable sites: \tdefault=2\n', default=2)
+    
+     # If no arguments are passed, show the help message
     if len(argv)==1:
         parser.print_help(stderr)
         
@@ -49,7 +87,11 @@ def init_argparse():
 
 
 def fasta_to_single_line_string(input_fasta,is_file = True):
-    #Converts fasta file to a single line string
+    """
+    Converts a FASTA file into a single-line DNA sequence string.
+    
+    The sequence is read and non-sequence lines (e.g., headers) are discarded.
+    """
 
     if is_file:
         with open(input_fasta,"r") as open_fasta_file:
@@ -62,20 +104,29 @@ def fasta_to_single_line_string(input_fasta,is_file = True):
 
     fasta_sequence = ''
 
+    # Iterate through lines and build the sequence string
     for line in line_list:
         strip_line = line.strip()
         if strip_line [0] == ">":
+            # Ensure there is only one sequence in the file
             if len(fasta_sequence) > 0:
+                global error_detected
+                error_detected = 'There are more then one Sequences in this file'
                 raise FastaSequenceError('There are more then one Sequences in this file')
-        elif strip_line .isalpha():
-            fasta_sequence += strip_line.upper() 
+        elif strip_line.isalpha():
+            fasta_sequence += strip_line.upper() # Only keep alphabetic characters (A, T, C, G)
         else:
             raise FastaSequenceError(f"Unknown character in input fasta {line}")
 
     return fasta_sequence
 
+
 def translate_codon(codon):
-    #Takes in a string and maps it to a amino acid in the dictionary 
+    """
+    Translates a 3-nucleotide codon to its corresponding amino acid.
+    
+    Uses a predefined genetic code dictionary.
+    """
 
     genetic_code = {
         'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
@@ -97,12 +148,17 @@ def translate_codon(codon):
     }
     return genetic_code.get(codon.upper(), '-')
 
+
 def reverse_complement(nucleotide):
-    #Reverses nucleotides to their complements
+    """
+    Returns the reverse complement of a given nucleotide sequence.
+    
+    A -> T, T -> A, C -> G, G -> C.
+    """
 
     reverse_complement = []
-    y = '-'
     for x in nucleotide:
+        y = '-'
         if str(x).upper() == "A":
             y = "T"
         if str(x).upper() == "T":
@@ -114,22 +170,28 @@ def reverse_complement(nucleotide):
 
         reverse_complement.append(y)
 
-    reverse_complement.reverse()
+    reverse_complement.reverse() # Reverse the order of the sequence
     return(reverse_complement)
 
-def reverse_complement_nucleotide(nucleotide_list):
-    #Reverses the nucleotide sequences 
+
+def reverse_complement_nucleotide(nucleotide_list,variable_sites_number = 2):
+    """
+    Reverses and complements a list of nucleotide sequences.
+    
+    The function handles a list of variable-length regions.
+    """
 
     reverse_nucleotide_list = []
 
     for item in nucleotide_list:
-        if len(item) > 1:
-            nucleotide_list = (''.join(reverse_complement(item[1])),''.join(reverse_complement(item[0])))
-            reverse_nucleotide_list.append(nucleotide_list)
+        if len(item) == variable_sites_number:
+            reverse_nucleotide = []
+            for i in item:
+                reverse_nucleotide += (''.join(reverse_complement(i)),)
+            reverse_nucleotide.reverse()
+            reverse_nucleotide_list.append(reverse_nucleotide)
     
     return reverse_nucleotide_list
-
-
 
 def reverse_complement_region_marker(region_marker_list):
     #Reverses the region marker sequences 
@@ -143,6 +205,7 @@ def reverse_complement_region_marker(region_marker_list):
     reverse_complement_region_marker_list.reverse()
 
     return reverse_complement_region_marker_list
+
 
 def find_variable_sites(fasta_sequence,variable_sites_number = 2):
     """
@@ -159,6 +222,7 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 
     non_standard_nucleotide_site = False
 
+    # Iterate through the sequence to find non-standard nucleotides
     for index,site in enumerate(fasta_sequence):
         if site in ["A","T","C","G"]:
             non_standard_nucleotide_site = False
@@ -169,15 +233,21 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
                 list_non_standard_nucleotide_region.append([index])
                 non_standard_nucleotide_site = True
 
+    # Check if the number of variable regions matches the expected number
     if len(list_non_standard_nucleotide_region) != variable_sites_number:
         raise VariableSites(f'Variable Sites requested {variable_sites_number} not equal to Variable Sites found {len(list_non_standard_nucleotide_region)}')
  
     return list_non_standard_nucleotide_region
 
-Default_distance_from_region = 8
+Default_distance_from_region = 8 # Default distance from variability sites to the 5' and 3' regions
+
 
 def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime = Default_distance_from_region,distance_3_prime = Default_distance_from_region):
-    #Find guide sequences
+    """
+    Identifies regions surrounding variable regions in the given DNA sequence.
+    
+    This function is used to extract sequences upstream and downstream of variable sites.
+    """
 
     region_marker_list = []
 
@@ -190,22 +260,38 @@ def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,dist
 
     return region_marker_list
 
+
 def find_codon_list(region_marker_list,fasta_line_list):
     #Find guide sequences
 
+    global other_sequence_list
+
     codon_list = []
-    for fasta_line in fasta_line_list:
+    for index,fasta_line in enumerate(fasta_line_list):
         sub_codon_list = []
         for region_marker in region_marker_list:
             variable_region = "." * region_marker[-1]
             search_template = f"{region_marker[0] + variable_region + region_marker[1]}"
 
             look_for = findall(search_template ,fasta_line)
+
             if len(look_for) > 0:
-                sub_codon_list.append(look_for[0][len(region_marker[0]):-len(region_marker[1])])
+                three_prime_end = -len(region_marker[1])
+                codon = look_for[0][len(region_marker[0]):three_prime_end]
+                
+                if three_prime_end == 0:
+                    codon = look_for[0][len(region_marker[0]):]
+
+                sub_codon_list.append(codon)
+
+
+
         codon_list.append(sub_codon_list)
+        if len(sub_codon_list) == 2:
+            other_sequence_list[index] = ""
 
     return codon_list
+
 
 def get_fastq_sequence_list(in_put_fastq,is_file = True):
     #Preprocess fastq file into individual list of sequences
@@ -231,6 +317,7 @@ def get_fastq_sequence_list(in_put_fastq,is_file = True):
 
     return sequence_list
 
+
 def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
     #Converts the each fastq sequence into a fasta sequence based on phread score 
 
@@ -244,6 +331,7 @@ def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
         list_fasta_sequence.append([">" + str(sequence[0][1:]),''.join(fasta_string)])
 
     return list_fasta_sequence 
+
 
 def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
     #This transforms the codon list to a list of amino acids
@@ -261,6 +349,7 @@ def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
                 amino_acid_list.append(amino_pair)
 
     return amino_acid_list
+
 
 def load_amino_dic(variable_sites_number=2):
     #Adds the amino acids counts to the dictionary  
@@ -286,6 +375,7 @@ def load_amino_dic(variable_sites_number=2):
 
     return amino_dic
 
+
 def populate_amino_dic(amino_acid_list,amino_dic):
     #Initializes the amino acid dictionary with empty values 
 
@@ -294,6 +384,7 @@ def populate_amino_dic(amino_acid_list,amino_dic):
         for amino in amino_pair:
             key += amino + "\t"
         amino_dic [key] += 1
+
 
 def write_out_file(out_file,amino_dic,region_marker_list):
     #Print out file as a excel or CSV
@@ -343,39 +434,65 @@ def write_out_file(out_file,amino_dic,region_marker_list):
 
         return out_file
 
+def Error_out():
+    """
+    Provides error output if something goes wrong during processing.
+    
+    This function writes errors to a file called "ERROR.txt".
+    """
+    
+    global error_detected
+    out_file = "ERROR.txt"
+    print(out_file)
+    with open(out_file,"w") as f:
+        f.write(error_detected)
+    f.close
+    return out_file
+
 
 def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_file_fastq = True,phread_score = 20,distance_5_prime = 8,distance_3_prime = 8,variable_sites_number = 2):
-
     #main driver code 
+
+    print("main driver code ")
 
     ref_fasta_sequence = fasta_to_single_line_string(input_fasta_file,is_file_fasta) #Converts fasta file into single line
 
     list_non_standard_nucleotide_region = find_variable_sites(ref_fasta_sequence,variable_sites_number) #returns a list of all continuous regions with nonstandard nucleotides
-
+    
     region_marker_list = find_guide_sequences(ref_fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime,distance_3_prime) #Find guide sequences
 
     sequence_list = get_fastq_sequence_list(in_put_fastq,is_file_fastq) #Preprocess fastq file into individual list of sequences
 
     fasta_line_list = [n[1] for n in fastq_to_fasta_sequence(sequence_list,phread_score)] #Converts the each fastq sequence into a fasta sequence based on phread score 
 
+    global other_sequence_list
+
+    other_sequence_list = fasta_line_list.copy()
+
     codon_list = find_codon_list(region_marker_list,fasta_line_list) #Find guide sequences
 
     amino_acid_list = convert_codons_to_amino_acid_list(codon_list,variable_sites_number) #This transforms the codon list to a list of amino acids
 
-    amino_dic = load_amino_dic(variable_sites_number) #Adds the amino acids counts to the dictionary 
+    amino_dic = load_amino_dic(variable_sites_number)  #Initializes the amino acid dictionary with empty values 
 
-    populate_amino_dic(amino_acid_list,amino_dic) #Initializes the amino acid dictionary with empty values 
+    populate_amino_dic(amino_acid_list,amino_dic) #Adds the amino acids counts to the dictionary
 
     reverse_complement_region_marker_list = reverse_complement_region_marker(region_marker_list) #Reverses the region marker sequences
 
     reverse_codon_list = find_codon_list(reverse_complement_region_marker_list,fasta_line_list) #Find guide sequences
-    
-    reverse_codon_list = reverse_complement_nucleotide(reverse_codon_list) #Reverses the nucleotide sequences
+
+    reverse_codon_list = reverse_complement_nucleotide(reverse_codon_list,variable_sites_number) #Reverses the nucleotide sequences
 
     reverse_amino_acid_list = convert_codons_to_amino_acid_list(reverse_codon_list,variable_sites_number) #This transforms the codon list to a list of amino acids
 
-    populate_amino_dic(reverse_amino_acid_list,amino_dic) #Initializes the amino acid dictionary with empty values 
+    populate_amino_dic(reverse_amino_acid_list,amino_dic) #Adds the amino acids counts to the dictionary 
 
+    with open("1out_file_seq.txt","w") as f:
+        for i,line in enumerate(other_sequence_list):
+            if line != "":
+                f.write(f">{i}\n" + line + "\n")
+
+        f.close
     if len(out_file) > 0:
         print("run")
         return write_out_file(out_file,amino_dic,list_non_standard_nucleotide_region)
@@ -410,7 +527,6 @@ if __name__ == '__main__':
     assert type(five_prime) == int
     assert type(three_prime) == int
     assert type(variable_sites) == int
-    
 
     # ========================================================================================================
     

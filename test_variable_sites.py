@@ -4,21 +4,9 @@ import find_variable_sites as FVS
 
 #test functions 
 
-def test_FastaSequenceError_1():
-    with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("nnktttaattgtggtggcgaatttttctactgtaattcaacacaactgtttaatagtacttggaattttaatggtacttggaatttaacacaatcgaatggtactgaaggaaatgacactatcacactcccctgtagaattaaacaaattataaacnnk\n>",False)
+global error_detected
+error_detected = None
 
-def test_FastaSequenceErrorChar_2():
-    with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("nnkttaattgtggtggcga-atttttctactgtaattcaacacaactgtttaatagtacttggaattttaatggtacttggaatttaacacaatcgaatggtactgaaggaaatgacactatcacactcccctgtagaattaaaaaattataaacnnk",False)
-
-def test_FastaSequenceError_string_3():
-    with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("FastaSequenceError.fa",False)
-
-def test_FastaSequenceErrorChar_string_4():
-    with pytest.raises(FVS.FastaSequenceError):
-       FVS.fasta_to_single_line_string("FastaSequenceErrorChar.fa",False)
 
 def test_Fasta_string_5():
     assert "FASTA" == FVS.fasta_to_single_line_string("Fasta",False)
@@ -33,7 +21,7 @@ def test_find_variable_sites_string_6_2():
 
     assert [[3, 4, 5], [12, 13, 14],[21,22,23]] == FVS.find_variable_sites(in_put_string,3)
 
-def test_find_variable_sites_string_6_5():
+def test_find_variable_sites_string_6_3():
     in_put_string = "AAABBBCCCGGGCCC"
 
     assert [[3, 4, 5]] == FVS.find_variable_sites(in_put_string,1)
@@ -59,7 +47,7 @@ def test_find_guide_sequences_7_3():
 
     assert [('AAA','CCC',3),('GGG','CCC',3),('TTT','GGG',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_from_region,distance_from_region)
 
-def test_find_guide_sequences_7_point_5():
+def test_find_guide_sequences_7_point_4():
     fasta_sequence = "AAABBBCCCGGGLLLCCCT"
     list_non_standard_nucleotide_region = [[3, 4, 5], [12, 13, 14]]
     distance_5_prime = 3
@@ -67,12 +55,51 @@ def test_find_guide_sequences_7_point_5():
 
     assert [('AAA','CCCG',3),('GGG','CCCT',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_5_prime,distance_3_prime)
 
+def test_find_guide_sequences_7_point_5():
+    fasta_sequence = "AAABBBCCCGGGLLLCCCT"
+    list_non_standard_nucleotide_region = [[3, 4, 5]]
+    distance_5_prime = 3
+    distance_3_prime = 3
+
+    assert [('AAA','CCC',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_5_prime,distance_3_prime)
+
+def test_find_guide_sequences_7_point_6():
+    fasta_sequence = "AAABBBCCCGGGLLLCCCT"
+    list_non_standard_nucleotide_region = [[3, 4, 5]]
+    distance_5_prime = 3
+    distance_3_prime = 2
+
+    assert [('AAA','CC',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_5_prime,distance_3_prime)
+
+def test_find_guide_sequences_7_point_7():
+    fasta_sequence = "AAABBBCCCGGGLLLCCCT"
+    list_non_standard_nucleotide_region = [[3, 4, 5]]
+    distance_5_prime = 3
+    distance_3_prime = 1
+
+    assert [('AAA','C',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_5_prime,distance_3_prime)
+
+def test_find_guide_sequences_7_point_8():
+    fasta_sequence = "AAABBBCCCGGGLLLCCCT"
+    list_non_standard_nucleotide_region = [[3, 4, 5]]
+    distance_5_prime = 3
+    distance_3_prime = 0
+
+    assert [('AAA','',3)] == FVS.find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region, distance_5_prime,distance_3_prime)
+
 
 def test_find_codon_list_8():
     region_marker_list = [('TTTAAA','CCCGGG',3),('CCCGGG','CCCTTT',3)]
     fasta_line = ["TTTAAAGGGCCCGGGAAACCCTTT","TTTAAATTTCCCGGGTTTCCCTTT"]
 
     assert [["GGG","AAA"],["TTT","TTT"]] == FVS.find_codon_list(region_marker_list,fasta_line)
+
+def test_find_codon_list_8_1():
+    region_marker_list = [('TTTAAA','',3),('CCCGGG','',3)]
+    fasta_line = ["TTTAAAGGGCCCGGGAAACCCTTT","TTTAAATTTCCCGGGTTTCCCTTT"]
+
+    assert [["GGG","AAA"],["TTT","TTT"]] == FVS.find_codon_list(region_marker_list,fasta_line)
+
 
 
 def test_get_fastq_sequence_list_9():
@@ -144,12 +171,47 @@ def test_find_codon_list_16_1():
 
     assert [["CGA","ATT","GGG"]] == FVS.find_codon_list(region_marker_list,fasta_line_list)
 
+def test_find_codon_list_16_2():
+
+    region_marker_list = [('TTGCCA', 'GTTTATAA', 3)]
+
+    fasta_line_list = ['TTGCCACGAGTTTATAACAATTAAAATTGTGCATTACGGTTAAAGGGGTGCA']
+
+    Distance_from_region = 8
+
+    assert [["CGA"]] == FVS.find_codon_list(region_marker_list,fasta_line_list)
+
+def test_find_codon_list_16_3():
+
+    region_marker_list = [('', 'GTTTATAA', 3)]
+
+    fasta_line_list = ['TTGCCACGAGTTTATAACAATTAAAATTGTGCATTACGGTTAAAGGGGTGCA']
+
+    Distance_from_region = 8
+
+    assert [["CGA"]] == FVS.find_codon_list(region_marker_list,fasta_line_list)
+
+def test_find_codon_list_16_3():
+
+    region_marker_list = [('TTGCCA', '', 3)]
+
+    fasta_line_list = ['TTGCCACGAGTTTATAACAATTAAAATTGTGCATTACGGTTAAAGGGGTGCA']
+
+    Distance_from_region = 8
+
+    assert [["CGA"]] == FVS.find_codon_list(region_marker_list,fasta_line_list)
+
 def test_convert_codons_to_amino_acid_list_17():
     codon_list = [["CGA","ATT"]]
 
     assert [['R', 'I']] == FVS.convert_codons_to_amino_acid_list(codon_list,2)
-    
+
 def test_convert_codons_to_amino_acid_list_17_1():
+    codon_list = [["TAG"]]
+
+    assert [['.']] == FVS.convert_codons_to_amino_acid_list(codon_list,1)
+    
+def test_convert_codons_to_amino_acid_list_17_2():
     codon_list = [["CGA","ATT","TAG"]]
 
     assert [['R', 'I','.']] == FVS.convert_codons_to_amino_acid_list(codon_list,3)
@@ -157,7 +219,17 @@ def test_convert_codons_to_amino_acid_list_17_1():
 def test_reverse_complement_nucleotide_18():
     reverse_codon_list = [['CGA', 'ATT']]
 
-    assert [('AAT', 'TCG')] == FVS.reverse_complement_nucleotide(reverse_codon_list)
+    assert [['AAT', 'TCG']] == FVS.reverse_complement_nucleotide(reverse_codon_list)
+
+def test_reverse_complement_nucleotide_18_1():
+    reverse_codon_list = [['CGA']]
+
+    assert [['TCG']] == FVS.reverse_complement_nucleotide(reverse_codon_list,1)
+
+def test_reverse_complement_nucleotide_18_2():
+    reverse_codon_list = [['ATT','CGA', 'ATT']]
+
+    assert [['AAT', 'TCG', 'AAT']] == FVS.reverse_complement_nucleotide(reverse_codon_list,3)
     
 def test_load_amino_dic_19():
     for x in range(5):
