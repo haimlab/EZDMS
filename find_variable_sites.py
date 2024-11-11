@@ -264,8 +264,6 @@ def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,dist
 def find_codon_list(region_marker_list,fasta_line_list):
     #Find guide sequences
 
-    global other_sequence_list
-
     codon_list = []
     for index,fasta_line in enumerate(fasta_line_list):
         sub_codon_list = []
@@ -287,8 +285,6 @@ def find_codon_list(region_marker_list,fasta_line_list):
 
 
         codon_list.append(sub_codon_list)
-        if len(sub_codon_list) == 2:
-            other_sequence_list[index] = ""
 
     return codon_list
 
@@ -465,10 +461,6 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
 
     fasta_line_list = [n[1] for n in fastq_to_fasta_sequence(sequence_list,phread_score)] #Converts the each fastq sequence into a fasta sequence based on phread score 
 
-    global other_sequence_list
-
-    other_sequence_list = fasta_line_list.copy()
-
     codon_list = find_codon_list(region_marker_list,fasta_line_list) #Find guide sequences
 
     amino_acid_list = convert_codons_to_amino_acid_list(codon_list,variable_sites_number) #This transforms the codon list to a list of amino acids
@@ -487,12 +479,6 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
 
     populate_amino_dic(reverse_amino_acid_list,amino_dic) #Adds the amino acids counts to the dictionary 
 
-    with open("1out_file_seq.txt","w") as f:
-        for i,line in enumerate(other_sequence_list):
-            if line != "":
-                f.write(f">{i}\n" + line + "\n")
-
-        f.close
     if len(out_file) > 0:
         print("run")
         return write_out_file(out_file,amino_dic,list_non_standard_nucleotide_region)
