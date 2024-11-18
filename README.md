@@ -52,6 +52,8 @@ usage: find_variable_sites.py [-h] [-o OUTPUT] [-p PHREAD] [-5 FIVE_PRIME] [-3 T
 
 Example command line: 
 
-python find_variable_sites.py nnk.fa "THBGSY_1_DMS_Test_1.fastq" -o "out.txt" -p 30 -5 8 -3 8 -v 2 
+python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" -p 20 -5 8 -3 8 -v 2 
+
+. .venv/bin/activate
 
  

@@ -110,7 +110,7 @@ def test_get_fastq_sequence_list_9():
 def test_fastq_to_fasta_sequence_10():
     sequence_list = [["@0_GGZBQ6_1","AAACCCTTTGGG","+","((()))((()))"],["@0_GGZBQ6_1","AAACCCTTTGGG","+","((()))((()))"]]
 
-    assert [['>0_GGZBQ6_1', '---CCC---GGG'], ['>0_GGZBQ6_1', '---CCC---GGG']] == FVS.fastq_to_fasta_sequence(sequence_list,20)
+    assert ['---CCC---GGG','---CCC---GGG'] == FVS.fastq_to_fasta_sequence(sequence_list,20)
 
 def test_populate_amino_dic_11():
     amino_dic = {".\t.\t":0 , "A\tA\t" : 0}

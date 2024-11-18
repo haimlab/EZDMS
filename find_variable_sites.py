@@ -42,7 +42,6 @@ error_detected = None
 # A decorator function for error handling in the main program flow
 def Error_detection(func):
     def inner1(*args, **kwargs):
-        returned_value = func(*args, **kwargs)
         global error_detected
 
         returned_value = error_detected
@@ -53,7 +52,7 @@ def Error_detection(func):
                 returned_value = func(*args, **kwargs)
             except:
                 if error_detected == None:
-                    error_detected = "ERROR.txt"
+                    error_detected = func.__doc__
                 returned_value = Error_out()
             # returning the value to the original frame
 
@@ -61,13 +60,16 @@ def Error_detection(func):
         
     return inner1
 
-
+@Error_detection
 def init_argparse():
     """
     Sets up command-line argument parsing for the program.
     
     Allows users to provide input FASTA and FASTQ files, along with output and various configuration options.
+    :
+    Unkown Error in init_argparse.
     """
+
 
     # Define command-line arguments
     parser = ArgumentParser(description ='This program creates a list of the amino acid groups found from specified variability sites')
@@ -85,12 +87,14 @@ def init_argparse():
         
     return parser
 
-
+@Error_detection
 def fasta_to_single_line_string(input_fasta,is_file = True):
     """
     Converts a FASTA file into a single-line DNA sequence string.
     
     The sequence is read and non-sequence lines (e.g., headers) are discarded.
+    :
+    Errors reading the input file. Check that it is the correct fasta format.
     """
 
     if is_file:
@@ -193,6 +197,7 @@ def reverse_complement_nucleotide(nucleotide_list,variable_sites_number = 2):
     
     return reverse_nucleotide_list
 
+@Error_detection
 def reverse_complement_region_marker(region_marker_list):
     #Reverses the region marker sequences 
 
@@ -206,7 +211,7 @@ def reverse_complement_region_marker(region_marker_list):
 
     return reverse_complement_region_marker_list
 
-
+@Error_detection
 def find_variable_sites(fasta_sequence,variable_sites_number = 2):
     """
     input - .txt .fasta 
@@ -214,6 +219,8 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 
     output - list of list of sites 
     all sites of each varable region 
+    :
+    Error Variable Sites requested not equal to Variable Sites found.
     """
 
     #returns a list of all continuous regions with nonstandard nucleotides
@@ -241,12 +248,14 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 
 Default_distance_from_region = 8 # Default distance from variability sites to the 5' and 3' regions
 
-
+@Error_detection
 def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,distance_5_prime = Default_distance_from_region,distance_3_prime = Default_distance_from_region):
     """
     Identifies regions surrounding variable regions in the given DNA sequence.
     
     This function is used to extract sequences upstream and downstream of variable sites.
+    :
+    Error Error in Error_detection
     """
 
     region_marker_list = []
@@ -260,8 +269,12 @@ def find_guide_sequences(fasta_sequence,list_non_standard_nucleotide_region,dist
 
     return region_marker_list
 
-
+@Error_detection
 def find_codon_list(region_marker_list,fasta_line_list):
+    """
+    :
+    Error Number of matching nucleotides invalid.
+    """
     #Find guide sequences
 
     codon_list = []
@@ -288,8 +301,12 @@ def find_codon_list(region_marker_list,fasta_line_list):
 
     return codon_list
 
-
+@Error_detection
 def get_fastq_sequence_list(in_put_fastq,is_file = True):
+    """
+    :
+    Error check if fastq file is valid.
+    """
     #Preprocess fastq file into individual list of sequences
 
     sequence_list  = []
@@ -313,8 +330,12 @@ def get_fastq_sequence_list(in_put_fastq,is_file = True):
 
     return sequence_list
 
-
+@Error_detection
 def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
+    """
+    :
+    Error check if fastq file is valid.
+    """
     #Converts the each fastq sequence into a fasta sequence based on phread score 
 
     list_fasta_sequence = []
@@ -326,10 +347,14 @@ def fastq_to_fasta_sequence(sequence_list,phread_score = 10):
                 fasta_string[site] = "-"
         list_fasta_sequence.append([">" + str(sequence[0][1:]),''.join(fasta_string)])
 
-    return list_fasta_sequence 
+    return [n[1] for n in list_fasta_sequence]
 
-
+@Error_detection
 def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
+    """
+    :
+    Error check if variable sites number and fasta file is valid.
+    """
     #This transforms the codon list to a list of amino acids
 
     amino_acid_list = []
@@ -346,8 +371,12 @@ def convert_codons_to_amino_acid_list(codon_list,variable_sites_number):
 
     return amino_acid_list
 
-
+@Error_detection
 def load_amino_dic(variable_sites_number=2):
+    """
+    :
+    Error check if variable sites number is valid.
+    """
     #Adds the amino acids counts to the dictionary  
 
     amino_acids = [".",1],["A",2],["C",1],["D",1],["E",1],["F",1],["G",2],["H",1],["I",1],["K",1],["L",3],["M",1],["N",1],["P",2],["Q",1],["R",3],["S",3],["T",2],["V",2],["W",1],["Y",1]
@@ -371,8 +400,12 @@ def load_amino_dic(variable_sites_number=2):
 
     return amino_dic
 
-
+@Error_detection
 def populate_amino_dic(amino_acid_list,amino_dic):
+    """
+    :
+    Error in populate_amino_dic
+    """
     #Initializes the amino acid dictionary with empty values 
 
     for amino_pair in amino_acid_list:
@@ -381,8 +414,12 @@ def populate_amino_dic(amino_acid_list,amino_dic):
             key += amino + "\t"
         amino_dic [key] += 1
 
-
+@Error_detection
 def write_out_file(out_file,amino_dic,region_marker_list):
+    """
+    :
+    Error in write_out_file
+    """
     #Print out file as a excel or CSV
 
     try:
@@ -429,12 +466,14 @@ def write_out_file(out_file,amino_dic,region_marker_list):
         f.close
 
         return out_file
-
+@Error_detection
 def Error_out():
     """
     Provides error output if something goes wrong during processing.
     
     This function writes errors to a file called "ERROR.txt".
+    :
+    Error in Error_out
     """
     
     global error_detected
@@ -445,9 +484,16 @@ def Error_out():
     f.close
     return out_file
 
-
+@Error_detection
 def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_file_fastq = True,phread_score = 20,distance_5_prime = 8,distance_3_prime = 8,variable_sites_number = 2):
     #main driver code 
+    """
+    Provides error output if something goes wrong during processing.
+    
+    This function writes errors to a file called "ERROR.txt".
+    :
+    Error in main driver code
+    """
 
     print("main driver code ")
 
@@ -459,7 +505,7 @@ def main(input_fasta_file,in_put_fastq,out_file = "",is_file_fasta = True,is_fil
 
     sequence_list = get_fastq_sequence_list(in_put_fastq,is_file_fastq) #Preprocess fastq file into individual list of sequences
 
-    fasta_line_list = [n[1] for n in fastq_to_fasta_sequence(sequence_list,phread_score)] #Converts the each fastq sequence into a fasta sequence based on phread score 
+    fasta_line_list = fastq_to_fasta_sequence(sequence_list,phread_score) #Converts the each fastq sequence into a fasta sequence based on phread score 
 
     codon_list = find_codon_list(region_marker_list,fasta_line_list) #Find guide sequences
 
