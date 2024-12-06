@@ -1,0 +1,60 @@
+<html> 
+<head> 
+	<title>upload the file : GFG</title> 
+</head> 
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background: white;
+}
+
+</style>
+
+<style>
+	.center {
+	  margin: 50;
+	}
+</style>
+
+
+<body> 
+	<h1>preference</h1>
+
+	<form method = "post" enctype="multipart/form-data"> 
+		<div class="center">
+		<label for="fname">Reference sequence(.fasta):</label>
+		<input type="file" id="files" name="file_fasta_1" /><br><br>
+		<label for="fname">Data sequence 1(.fastq):</label>
+		<input type="file" id="files" name="file_fastq_1" /><br><br>
+
+		<label for="fname">Data sequence 2(.fastq):</label>
+		<input type="file" id="files" name="file_fastq_2" /><br><br>
+
+		<label for="lname"> Number of matching nucleotides 5 prime:</label>
+		<input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>
+		
+		<label for="lname">Number of matching nucleotides 3 prime:</label>
+		<input type="number" id="nucleotide_match" name="nucleotide_match" value="8" min="0" max="99"><br><br>
+
+		<label for="fname">Phred score threshold:</label>
+		<input type="number" id="phred_score" name="phred_score" value="20" min="0" max="99"><br><br>
+
+		<label for="lname">Output file name:</label>
+		<input type="text" id="file_name" name="file_name" value="your_out_put_file"><br><br>
+
+		<label for="fname">Number of variable sites:</label>
+		<input type="number" id="variable_sites_number" name="variable_sites_number" value="2" min="1" max="5"><br><br>
+		</div>
+
+
+		<div class="center">
+			<input type = "submit" value="Upload">
+		</div>
+
+
+		
+</body> 
+</html>
+

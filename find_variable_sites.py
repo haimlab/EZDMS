@@ -106,6 +106,8 @@ def fasta_to_single_line_string(input_fasta,is_file = True):
     else:
         line_list = input_fasta.split("\n")
 
+
+
     fasta_sequence = ''
 
     # Iterate through lines and build the sequence string
@@ -116,10 +118,12 @@ def fasta_to_single_line_string(input_fasta,is_file = True):
             if len(fasta_sequence) > 0:
                 global error_detected
                 error_detected = 'There are more then one Sequences in this file'
+                print('There are more then one Sequences in this file')
                 raise FastaSequenceError('There are more then one Sequences in this file')
         elif strip_line.isalpha():
             fasta_sequence += strip_line.upper() # Only keep alphabetic characters (A, T, C, G)
         else:
+            print(f"Unknown character in input fasta {line}")
             raise FastaSequenceError(f"Unknown character in input fasta {line}")
 
     return fasta_sequence
@@ -383,6 +387,7 @@ def load_amino_dic(variable_sites_number=2):
 
     amino_dic = {}
 
+
     loop = range(len(amino_acids) ** variable_sites_number)
 
     for i in loop:
@@ -397,6 +402,8 @@ def load_amino_dic(variable_sites_number=2):
             count -= m
             
         amino_dic[key] = 0
+
+    
 
     return amino_dic
 
