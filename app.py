@@ -34,6 +34,7 @@ def find_variable_sites():
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
 			variable_sites_number = int(request.form.get('variable_sites_number'))
+			print(variable_sites_number)
 		
 			out_path = FVS.main(fasta_file.filename,fastq_file.filename,out_path,True,True,phread_score,distance_5_prime,distance_3_prime,variable_sites_number)
 			try:

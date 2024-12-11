@@ -246,6 +246,7 @@ def find_variable_sites(fasta_sequence,variable_sites_number = 2):
 
     # Check if the number of variable regions matches the expected number
     if len(list_non_standard_nucleotide_region) != variable_sites_number:
+        print(list_non_standard_nucleotide_region,variable_sites_number)
         raise VariableSites(f'Variable Sites requested {variable_sites_number} not equal to Variable Sites found {len(list_non_standard_nucleotide_region)}')
  
     return list_non_standard_nucleotide_region
