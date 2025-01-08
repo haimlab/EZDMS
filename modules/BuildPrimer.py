@@ -1,4 +1,4 @@
-from find_variable_sites import fasta_to_single_line_string,reverse_complement,find_variable_sites
+from modules.find_variable_sites import fasta_to_single_line_string,reverse_complement,find_variable_sites
 
 def main(input_fasta_file,Out_path):
 

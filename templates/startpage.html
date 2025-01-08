@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start</title>
+    <style>
+        .big-button {
+            display: inline-block;
+            padding: 20px 40px;
+            font-size: 24px;
+            background-color: #4CAF50;  /* Green background */
+            color: white;                /* White text */
+            text-align: center;
+            text-decoration: none;       /* Remove underline from the link */
+            border-radius: 10px;         /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  /* Shadow effect */
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .big-button:hover {
+            background-color: #45a049;  /* Darker green when hovered */
+            transform: scale(1.05);       /* Slightly enlarge the button */
+        }
+
+        .big-button:active {
+            background-color: #388e3c;  /* Even darker green when clicked */
+            transform: scale(1);         /* Reset scale when clicked */
+        }
+    </style>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const href = this.getAttribute('href');
+                    if (href) {
+                        event.preventDefault();  // Prevent the link from being followed in the WebView
+                        // Call Python function to open the link externally
+                        window.pywebview.api.open_link(href);  // Call Python method via pywebview API
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <p><a href="http://127.0.0.1:5000" target="_blank" class="big-button">Go FQ VSearch</a></p>
+</body>
+</html>

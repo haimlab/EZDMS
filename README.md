@@ -56,4 +56,10 @@ python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" 
 
 . .venv/bin/activate
 
- 
+ pyinstaller --onefile --windowed --add-data "templates/index.html:templates" --add-data "templates/preference.html:templates" app.py
+
+ pyinstaller --onefile --add-data "templates/:templates" app.py
+
+ --onefile --windowed --add-data "templates:templates" --icon=FGV.icns app.py 
+
+ pyinstaller --onefile --windowed --add-data "templates:templates" --icon=FGV.icns app.py 

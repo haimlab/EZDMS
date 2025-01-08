@@ -1,6 +1,6 @@
 import pytest
 
-import find_variable_sites as FVS
+import modules.find_variable_sites as FVS
 
 #test functions 
 
