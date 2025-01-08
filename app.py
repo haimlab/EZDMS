@@ -164,14 +164,14 @@ def start_flask():
 			distance_5_prime = int(request.form.get('distance_5_prime'))
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
-			variable_sites_number = int(request.form.get('variable_sites_number'))
+			variable_sites_number = 1
 			print(variable_sites_number)
+
+			wild_type_amino_acid = request.form.get('variable_sites_number')
 
 			file_fasta_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fasta_1.filename)
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)
 			file_fastq_2_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)
-
-			phread_score = 20
 		
 			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
 
@@ -179,7 +179,7 @@ def start_flask():
 
 			print(out_path)
 
-			out_path = RSC.main(pre_amino_dict,post_amino_dict,out_path)
+			out_path = RSC.main(wild_type_amino_acid ,pre_amino_dict,post_amino_dict,out_path)
 			
 			if os.path.exists(out_path):
 				return send_file(out_path, as_attachment=True)
