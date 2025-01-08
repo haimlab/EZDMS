@@ -21,7 +21,7 @@ from re import findall # For regular expression searching
 from sys import argv,stderr # For handling command-line arguments and errors
 import os
 
-from customErrors import *
+from modules.customErrors import *
 
 def init_argparse():
     """

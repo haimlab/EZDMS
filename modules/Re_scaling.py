@@ -1,4 +1,4 @@
-import find_variable_sites as FVS
+import modules.find_variable_sites as FVS
 
 import numpy as np
 
