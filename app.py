@@ -157,7 +157,7 @@ def start_flask():
 			distance_5_prime = int(request.form.get('distance_5_prime'))
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
-			wild_type_amino_acid = int(request.form.get('variable_sites_number'))
+			wild_type_amino_acid = request.form.get('variable_sites_number')
 
 			file_fasta_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fasta_1.filename)
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)

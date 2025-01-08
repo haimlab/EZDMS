@@ -50,14 +50,6 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
     for key in pre_amino_dict.keys():
         pre_amino_dict[key] = pre_amino_dict[key]/2
 
-    pre_amino_dict_WT = {}
-    for key in pre_amino_dict.keys():
-        pre_amino_dict_WT[key] = 100
-
-    post_amino_dict_WT = {}
-    for key in pre_amino_dict.keys():
-        post_amino_dict_WT[key] = 11
-
     pre_amino_list = []
     for key in pre_amino_dict.keys():
         pre_amino_list.append(float(pre_amino_dict[key]))
@@ -65,34 +57,19 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
 
     post_amino_list = []
     for key in post_amino_dict.keys():
-
         post_amino_list.append(float(post_amino_dict[key]))
     post_amino_sum = sum(post_amino_list)
-
-    pre_amino_WT_list = []
-    for key in post_amino_dict_WT.keys():
-        pre_amino_WT_list.append(float(pre_amino_dict_WT[key]))
-    pre_amino_WT_sum = sum(pre_amino_WT_list)
-
-    post_amino_WT_list = []
-    for key in post_amino_dict_WT.keys():
-        post_amino_WT_list.append(float(post_amino_dict_WT[key]))
-    post_amino_WT_sum = sum(post_amino_WT_list)
 
     Enrichment_dict = {}
     for key in pre_amino_dict.keys():
         try:
-            Enrichment_dict[key] = float(calculateEnrichmentRatio(pre_amino_dict[key]/pre_amino_sum,pre_amino_dict_WT[WT]/pre_amino_WT_sum ,post_amino_dict[key]/post_amino_sum,post_amino_dict_WT[WT]/post_amino_WT_sum))
+            Enrichment_dict[key] = float(calculateEnrichmentRatio(pre_amino_dict[key]/pre_amino_sum,pre_amino_dict[WT]/pre_amino_sum ,post_amino_dict[key]/post_amino_sum,post_amino_dict[WT]/post_amino_sum))
         except ZeroDivisionError:
             Enrichment_dict[key] = 0
 
     Preference_dict = {}
     for key in Enrichment_dict.keys():
         Preference_dict[key] = calculatePreference(Enrichment_dict,key)
-
-    post_amino_WT_list = []
-    for key in post_amino_dict_WT.keys():
-        post_amino_WT_list.append(float(post_amino_dict_WT[key]))
 
     ReScaledEnrichmentRatio = {}
     for key in Preference_dict.keys():
@@ -101,7 +78,7 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
 
         SMedianSynonymous = Preference_dict[WT]
 
-        SMedianBottom = np.percentile(post_amino_WT_list, 1)
+        SMedianBottom = np.percentile(post_amino_list, 1)
 
         ReScaledEnrichmentRatio[key] = calculateReScaledEnrichmentRatio(SiReported,SMedianSynonymous,SMedianBottom)
 
