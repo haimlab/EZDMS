@@ -411,7 +411,7 @@ def write_out_file(out_file,amino_dic_list,region_marker_list):
         # Create an Excel file with one empty sheet
         with pd.ExcelWriter(out_file, engine='openpyxl', mode='w') as writer:
             # Create an empty DataFrame to add a default sheet
-            pd.DataFrame().to_excel(writer, sheet_name="Sheet1")
+            pd.DataFrame().to_excel(writer, sheet_name="ERROR")
         with pd.ExcelWriter(out_file, engine='openpyxl', mode='a', if_sheet_exists='new') as writer:
             for amino_index,amino_dic in enumerate(amino_dic_list):
                 columns=[]
@@ -428,6 +428,10 @@ def write_out_file(out_file,amino_dic_list,region_marker_list):
 
                 df = pd.DataFrame(list(amino), columns=columns)
                 df.to_excel(writer, sheet_name=f'barcode_{amino_index+1}', index=False)
+            try:
+                writer.book.remove(writer.book["ERROR"])
+            except:
+                pass
         
 
         return out_file
