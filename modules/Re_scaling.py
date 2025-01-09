@@ -45,8 +45,6 @@ def write_out_file(out_file,amino_dic,region_marker_list):
 
 def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
     WT = WT + "\t"
-    #print(pre_amino_dict)
-    #print(post_amino_dict)
 
     for key in pre_amino_dict.keys():
         pre_amino_dict[key] = pre_amino_dict[key]/2
@@ -66,17 +64,20 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
     post_amino_wild_type = post_amino_dict[WT]/post_amino_sum
     for key in pre_amino_dict.keys():
         try:
+
             pre_amino_ratio = pre_amino_dict[key]/pre_amino_sum
             post_amino_ratio = post_amino_dict[key]/post_amino_sum
             
             Enrichment_dict[key] = float(calculateEnrichmentRatio(post_amino_ratio,post_amino_wild_type,pre_amino_ratio,pre_amino_wild_type))
             #print(key,Enrichment_dict[key])
+
         except ZeroDivisionError:
             Enrichment_dict[key] = 0
 
     Preference_dict = {}
     for key in Enrichment_dict.keys():
         Preference_dict[key] = calculatePreference(Enrichment_dict,key)
+
 
 
     """ReScaledEnrichmentRatio = {}
@@ -110,6 +111,7 @@ if __name__ == '__main__':
     variable_sites = 1
 
     WT = 'S'
+
 
     #pre_amino_dict = FVS.main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
     #post_amino_dict = FVS.main(input_fasta_file,in_put_fastq2,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)

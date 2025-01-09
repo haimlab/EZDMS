@@ -22,6 +22,9 @@ import requests
 
 from pathlib import Path
 
+import sys
+sys.path.insert(0, '/modules')
+
 import modules.find_variable_sites as FVS
 import modules.BuildPrimer as BP
 import modules.Re_scaling as RSC
@@ -164,8 +167,10 @@ def start_flask():
 			distance_5_prime = int(request.form.get('distance_5_prime'))
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
+
 			variable_sites_number = 1
 			print(variable_sites_number)
+
 
 			wild_type_amino_acid = request.form.get('variable_sites_number')
 
@@ -173,9 +178,9 @@ def start_flask():
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)
 			file_fastq_2_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)
 		
-			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
+			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(1))
 
-			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
+			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(1))
 
 			print(out_path)
 
