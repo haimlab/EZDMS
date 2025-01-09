@@ -59,6 +59,11 @@ def start_flask():
 	def home():
 		return render_template("home_page.html")
 	
+	@app.route('/css/<path:filename>')
+	def send_css(filename):
+		return send_from_directory('templates/css', filename)
+	
+
 	@app.route('/TEST',methods=['GET', 'POST']) 
 	def test():
 		return render_template("Index.html")
@@ -106,6 +111,11 @@ def start_flask():
 	def contact():
 		# This can be a page where users can download files
 		return render_template('Contacts.html')
+	
+	@app.route('/help')
+	def help():
+		# This can be a page where users can download files
+		return render_template('Help_page.html')
 	
 	@app.route('/startpage')
 	def downloads():
@@ -157,13 +167,16 @@ def start_flask():
 			distance_5_prime = int(request.form.get('distance_5_prime'))
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
+
+			variable_sites_number = 1
+			print(variable_sites_number)
+
+
 			wild_type_amino_acid = request.form.get('variable_sites_number')
 
 			file_fasta_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fasta_1.filename)
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)
 			file_fastq_2_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)
-
-			phread_score = 20
 		
 			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(1))
 

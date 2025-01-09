@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Link to the CSS file managed through Flask routing -->
+    <link rel="stylesheet" href="css/styles.css">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        <a href="/find_variable_sites">Variable Sites</a>
+        <a href="/preference">Preferences</a>
+        <a href="/build_primer">Build Primer</a>
+        <a href="/help">Help</a>
+        <a href="/contact">Contact</a>
+    </div>
+
+    {% block content %}
+    <!-- Content specific to each page will go here -->
+    {% endblock %}
+
+    <footer>
+        <p>@ Developed by Haim Lab</p>
+    </footer>
+</body>
+</html>
