@@ -78,7 +78,8 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
     for key in Enrichment_dict.keys():
         Preference_dict[key] = calculatePreference(Enrichment_dict,key)
 
-    ReScaledEnrichmentRatio = {}
+
+    """ReScaledEnrichmentRatio = {}
 
     for key in Preference_dict.keys():
 
@@ -88,8 +89,10 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
 
         SMedianBottom = np.percentile(post_amino_list, 1)
 
-        ReScaledEnrichmentRatio[key] = calculateReScaledEnrichmentRatio(SiReported,SMedianSynonymous,SMedianBottom)
+        ReScaledEnrichmentRatio[key] = calculateReScaledEnrichmentRatio(SiReported,SMedianSynonymous,SMedianBottom) 
+        """
 
+    print(out_file,len(out_file))
     if len(out_file) > 0:
         print("run")
         return write_out_file(out_file, Preference_dict,[[1]])
@@ -111,8 +114,6 @@ if __name__ == '__main__':
     #pre_amino_dict = FVS.main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
     #post_amino_dict = FVS.main(input_fasta_file,in_put_fastq2,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
     #print(main(WT,pre_amino_dict,post_amino_dict,"here"))
-
-    print(calculatePreference(EnrichmentRatioDict,PreferenceSite))
 
 
 

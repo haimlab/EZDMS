@@ -296,3 +296,16 @@ def test_find_variable_sites_5():
     EnrichmentRatioDict = {1:1,2:1,3:1,4:1}
     PreferenceSite = 1
     assert .25 == RS.calculatePreference(EnrichmentRatioDict,PreferenceSite)
+
+def test_find_variable_sites_6():
+    WT ="1" 
+    pre_amino_dict = {"1\t":100,"2\t":100,"3\t":100,"4\t":100,"5\t":100,"6\t":100,"7\t":100,"8\t":100}
+    post_amino_dict = {"1\t":50,"2\t":10,"3\t":80,"4\t":100,"5\t":00,"6\t":30,"7\t":5,"8\t":100}
+    expected_dict = {'1\t': 0.13333333333333333, '2\t': 0.02666666666666667, '3\t': 0.21333333333333335, '4\t': 0.26666666666666666, '5\t': 0.0, '6\t': 0.08, '7\t': 0.013333333333333334, '8\t': 0.26666666666666666}
+    print(RS.main(WT,pre_amino_dict,post_amino_dict,""))
+
+
+
+def calculateReScaledEnrichmentRatio(SiReported,SMedianSynonymous,SMedianBottom):
+    SiScaled = ((SiReported - SMedianSynonymous)/-SMedianBottom)+1
+    return SiScaled
