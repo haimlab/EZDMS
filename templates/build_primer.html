@@ -29,7 +29,17 @@
 			<div class="help-section">
 				<h2>Build primer</h2>
 				<p>The <strong>Build primer</strong> tool requires two input parameters. Below is a detailed explanation of each:</p>
-				<p>The tool creates the 4 primers needed to create a plasmid library from a reference sequence. </p>
+				<p>The tool creates the 4 primers needed to create a plasmid library from a reference sequence. 
+ 
+					The tool creates the 4 primers needed to create a plasmid library from a reference sequence in a text file (txt). 
+					Forward Primer 1 (F1): Primer at the very beginning of the sequence needed for PCR on the full sequence. 
+					Forward Primer 2 (F2): Primer after the 3' end of the variable site without overlapping the site. 
+					Forward Primer 1 (F1): The 60 base pair primer that covers the variable sequence. 
+					Reverse Primer 2 (R2): Primer at the end of sequence needed for PCR on the full sequence. 
+					 
+					Any sequences with basic self-binding or other errors will be flagged at the end of the text file. 
+
+				</p>
 				<li><strong>Reference Sequence (.fasta)</strong>
 				<ul>
 					This is the fastq file containing sequencing data from a plasmid library. 
@@ -38,7 +48,7 @@
 				</ul>
 				</li>
 				<li><strong>Number of Variable Sites</strong>
-                    <p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
+                    <ul>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</u>
                 </li>
 			</div>
         </div>
