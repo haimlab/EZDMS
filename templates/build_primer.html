@@ -27,36 +27,19 @@
         <!-- Box 2 -->
         <div class="box">
 			<div class="help-section">
-				<h2>Variable Sites</h2>
-				<p>The <strong>Find Variable Sites</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
-			
+				<h2>Build primer</h2>
+				<p>The <strong>Build primer</strong> tool requires two input parameters. Below is a detailed explanation of each:</p>
+				<p>The tool creates the 4 primers needed to create a plasmid library from a reference sequence. </p>
+				<li><strong>Reference Sequence (.fasta)</strong>
 				<ul>
-					<li><strong>Reference Sequence (.fasta)</strong>
-						<p>This is the fasta file containing the reference sequence. The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format.</p>
-					</li>
-					<li><strong>Data Sequence (.fastq)</strong>
-						<p>This is the fastq file containing sequencing data from a plasmid library. The library should be derived from the reference sequence (provided above). The tool will use this file to compare against the reference to identify variable sites.</p>
-					</li>
-					<li><strong>Output File Name</strong>
-						<p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification.</p>
-					</li>
-					<li><strong>Number of Matching Nucleotides (5' End)</strong>
-						<p>This value specifies how many nucleotides, starting from the 5' end of the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
-					</li>
-					<li><strong>Number of Matching Nucleotides (3' End)</strong>
-						<p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
-					</li>
-					<li><strong>Phred Score Threshold</strong>
-						<p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable.</p>
-					</li>
-					<li><strong>Number of Variable Sites</strong>
-						<p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
-					</li>
-					<li><strong>(Optional) Barcode Check</strong>
-						<p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis.</p>
-					</li>
+					This is the fastq file containing sequencing data from a plasmid library. 
+					The library should be derived from the reference sequence (provided above).  
+					The tool will use this file to compare against the reference to identify variable sites. 
 				</ul>
-			
+				</li>
+				<li><strong>Number of Variable Sites</strong>
+                    <p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
+                </li>
 			</div>
         </div>
     </div>
