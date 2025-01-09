@@ -3,7 +3,11 @@
 <!-- {% block title %}Preference{% endblock %} -->
 
 {% block content %}
-
+<div class="title-container">
+    <div class="inner-title">
+        <h1 class="page-title">Preferences</h1>
+    </div>
+</div>
     <!-- Container for the two boxes -->
     <div class="container">
         <!-- Box 1 -->
@@ -11,13 +15,13 @@
 			<div class="center-form">
 				<form method="post" enctype="multipart/form-data">
 					<div class="center">
-                        <label for="fname">Reference sequence(.fasta):</label>
-                        <input type="file" id="files" name="file_fasta_1" /><br><br>
+                        <label for="fname" >Reference sequence(.fasta):</label>
+                        <input type="file" id="files" name="file_fasta_1" accept=".fasta,.fa"/><br><br>
                         <label for="fname">Data sequence 1(.fastq):</label>
-                        <input type="file" id="files" name="file_fastq_1" /><br><br>
+                        <input type="file" id="files" name="file_fastq_1" accept=".fasta,.fa"/><br><br>
                 
                         <label for="fname">Data sequence 2(.fastq):</label>
-                        <input type="file" id="files" name="file_fastq_2" /><br><br>
+                        <input type="file" id="files" name="file_fastq_2" accept=".fastq"/><br><br>
                 
                         <label for="lname"> Number of matching nucleotides 5 prime:</label>
                         <input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>

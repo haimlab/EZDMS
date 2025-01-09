@@ -1,44 +1,65 @@
 /* General Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
-    padding-top: 60px;
+    background-color: #f8f9fa; 
+    padding-top: 80px; 
     margin: 0;
 }
+
 /* Navbar Styles */
 .navbar {
-    background-color: #333;
+    background-color: #2c3e50;
     overflow: hidden;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    font-family: 'Arial', sans-serif;
+    height: 60px; 
 }
-.navbar a {
-    float: left;
+
+.navbar-left .navbar-brand {
+    color: white;
+    text-decoration: none;
+    padding: 18px 20px;
+    font-size: 22px; 
+    font-weight: bold; 
+}
+
+.navbar-right a {
+    float: left; 
     display: block;
     color: white;
     text-align: center;
-    padding: 14px 20px;
+    padding: 18px 20px; 
     text-decoration: none;
+    font-size: 16px; 
 }
+
 .navbar a:hover {
-    background-color: #ddd;
-    color: black;
+    background-color:  #475F77;
+    color: white; 
 }
-/* Responsive navbar */
+
 @media screen and (max-width: 600px) {
-    .navbar a {
-        float: none;
+    .navbar {
+        flex-direction: column; 
+        padding-bottom: 10px; 
+    }
+    .navbar-right a {
+        text-align: center;
         width: 100%;
-        text-align: left;
     }
 }
+
 /* Footer Styles */
 footer {
     text-align: center;
     padding: 10px 0;
-    background-color: #333;
+    background-color: #2c3e50; 
     color: white;
     position: fixed;
     bottom: 0;
@@ -46,118 +67,232 @@ footer {
 }
 
 
-/* FQ_VSearch.html page CSS */
-.container-fq-vsearch {
+/* 
+
+All Pages CSS 
+
+*/
+
+/* Base container styles */
+.container {
     display: flex;
-    justify-content: space-between; /* This will place the elements side by side with space in between */
+    justify-content: space-between;
     padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 30px; 
+    background-color: #f4f7fa; 
+}
+
+.title-container {
+    width: 100%; 
+    background-color: #f8f9fa; 
+    padding: 0px; 
     box-sizing: border-box;
 }
 
-.container-fq-vsearch .box {
-    width: 48%; /* Adjust width to fit side by side */
-    padding: 20px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 10px; /* Add margin for spacing */
+.inner-title {
+    background-color: #fff; 
+    margin: 0 auto;
+    padding: 15px; 
+    border: 1px solid #ccc; 
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    max-width: 95%; 
 }
 
-.center-form {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Use 100% of the container width */
+.page-title {
+    text-align: Left;
+    color: #2c3e50; 
+    font-family: 'Arial', sans-serif;
+    margin-left: 20px;
+    font-size: 28px; 
+    font-weight: bold;
+    margin: 0; 
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure form elements are styled uniformly */
-.container-fq-vsearch input[type="file"],
-.container-fq-vsearch input[type="text"],
-.container-fq-vsearch input[type="number"],
-.container-fq-vsearch button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.container .box {
+    width: 48%;
+    padding: 20px;
+    background-color: #ffffff;
+    border: 1px solid #dadee4; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); 
+    margin: 10px;
+}
+
+
+.center-form label {
+    display: block;
+    margin-bottom: 5px; 
+    font-size: 16px; 
+    color: #333; 
+    font-weight: bold; 
+}
+
+.container input[type="file"],
+.container input[type="text"],
+.container input[type="number"],
+.container button {
+    width: 100%; 
+    padding: 10px 15px; 
+    margin-bottom: 0px;
+    border: 1px solid #ccd1d9; 
+    border-radius: 5px; 
     box-sizing: border-box;
+    font-size: 15px; 
 }
-
-.container-fq-vsearch .submit-btn {
-    background-color: #4CAF50;
+.container .submit-btn {
+    background-color: #5a7694; 
     color: white;
     font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 12px 30px;
-    border: none;
+    padding: 12px 20px;
     border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
-    width: auto; /* Allow button to size to its content */
+    transition: background-color 0.3s ease, transform 0.2s ease; 
 }
 
-.container-fq-vsearch .submit-btn:hover {
-    background-color: #45a049;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+.container .submit-btn:hover {
+    background-color: #475F77; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); 
 }
 
 
-/* Build Primer CSS */
-/* Scoped styles for build_primer.html */
-.build-primer .center-container {
+/* 
+
+help Page css 
+
+*/
+.container-help {
     display: flex;
-    justify-content: right;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 30px; 
+    background-color: #f4f7fa; 
+}
+
+.container-help .help-box {
+    width: 60%;
+    padding: 20px;
+    justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #ffffff;
+    border: 1px solid #dadee4; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); 
+    margin: 10px;
 }
 
-.build-primer .center-form {
-    background-color: #f9f9f9;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 80%;
-    max-width: 800px;
-}
 
-.build-primer .center input[type="file"],
-.build-primer .center input[type="text"],
-.build-primer .center input[type="number"],
-.build-primer .center button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.build-primer .submit-btn {
-    background-color: #4CAF50;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
+.container-help .help-box .help-section h2 {
     cursor: pointer;
-    padding: 12px 30px;
+    padding: 10px;
+    background-color: #f4f7fa;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+.container-help .help-box .help-section p,
+.container-help .help-box .help-section ul {
+    display: none;  
+    padding: 10px;
+    background-color: #ffffff;
+    margin: 10px;
+}
+
+.container-help .help-box .help-section.active p,
+.container-help .help-box .help-section.active ul {
+    display: block; 
+}
+
+
+/* 
+
+Contacts-page.
+
+*/ 
+.container-contact {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+    background-color: #f4f7fa;
+} 
+
+.container-contact .box {
+    width: 80%;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #dadee4; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06); 
+    margin: 10px;
+}
+
+
+.container-contact .box .form {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.container-contact .box .form-input {
+    padding: 30px;
+    margin-bottom: 15px; 
+    border: 1px solid #dadee4; 
+    border-radius: 4px; 
+    background-color: #f4f7fa; 
+}
+
+.container-contact .box .form-btn {
+    width: 60%;
+    margin: 0 auto; 
+    background-color: #5a7694;
+    color: white;
     border: none;
-    border-radius: 8px;
-    text-align: center;
-    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
 }
 
-.build-primer .submit-btn:hover {
-    background-color: #45a049;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+.container-contact .box .form-btn:hover {
+    background-color: #475F77; 
 }
 
-.build-primer .submit-btn:active {
-    background-color: #3e8e41;
-    box-shadow: none;
-    transform: translateY(0);
+.container-contact .box .form-btn ion-icon {
+    margin-right: 5px; 
+}
+
+/*  map area */
+.container-contact .box .mapbox {
+    border: 1px solid #dadee4; 
+    border-radius: 8px; 
+    overflow: hidden; 
+    margin-top: 20px;
+}
+
+.container-contact .box .mapbox iframe {
+    width: 100%; 
+    height: 300px; 
+}
+.container-contact .box .input-wrapper {
+    display: flex;
+    justify-content: space-between; 
+    gap: 10px; 
+
+}
+
+.container-contact .box .input-wrapper .form-input {
+    flex: 1; 
+    padding: 10px; 
+    border: 1px solid #dadee4; 
+    border-radius: 4px; 
 }

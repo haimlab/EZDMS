@@ -3,6 +3,11 @@
 <!-- {% block title %}Build Primer{% endblock %} -->
 
 {% block content %}
+<div class="title-container">
+    <div class="inner-title">
+        <h1 class="page-title">Build Primer</h1>
+    </div>
+</div>
     <!-- Container for the two boxes -->
     <div class="container">
         <!-- Box 1 -->
@@ -11,7 +16,7 @@
 				<form method="post" enctype="multipart/form-data">
 					<div class="center">
                             <label for="fname">Reference sequence (.fasta):</label>
-                            <input type="file" id="files" name="file1" /><br><br>
+                            <input type="file" id="files" name="file1" accept=".fasta,.fa" /><br><br>
                             <label for="lname">Output file name:</label>
                             <input type="text" id="file_name" name="file_name" value="your_out_put_file"><br><br>
                 
@@ -62,3 +67,14 @@
     </div>
 
 {% endblock %}
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var sections = document.querySelectorAll('.help-section h2');
+		sections.forEach(function(header) {
+			header.addEventListener('click', function() {
+				this.parentNode.classList.toggle('active');
+			});
+		});
+	});
+</script>
+	

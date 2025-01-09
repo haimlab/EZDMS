@@ -10,14 +10,18 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/find_variable_sites">Variable Sites</a>
-        <a href="/preference">Preferences</a>
-        <a href="/build_primer">Build Primer</a>
-        <a href="/help">Help</a>
-        <a href="/contact">Contact</a>
+        <div class="navbar-left">
+            <a href="/" class="navbar-brand">EZD Plasmid</a>
+        </div>
+        <div class="navbar-right">
+            <a href="/">Home</a>
+            <a href="/find_variable_sites">Variable Sites</a>
+            <a href="/preference">Preferences</a>
+            <a href="/build_primer">Build Primer</a>
+            <a href="/help">Help</a>
+            <a href="/contact" >Contact</a>
+        </div>
     </div>
-
     {% block content %}
     <!-- Content specific to each page will go here -->
     {% endblock %}
