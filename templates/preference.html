@@ -81,33 +81,34 @@
         <!-- Box 2 -->
         <div class="box">
 			<div class="help-section">
-				<h2>Variable Sites</h2>
-				<p>The <strong>Find Variable Sites</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
-			
+				<h2>Amino Acid Preference</h2>
+				<p>The <strong>Find Amino Acid Preference</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
+
+                <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site. It normalizes the mutations against the wild-type sequences for accurate analysis. The output format is an excel file with the normalized amino acid prefrences.</p>
 				<ul>
 					<li><strong>Reference Sequence (.fasta)</strong>
-						<p>This is the fasta file containing the reference sequence. The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format.</p>
+						<p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library. The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format. The rest of the Reference Sequence should match the original plasmid sequence the library is based off of. This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library.</p>
 					</li>
-					<li><strong>Data Sequence (.fastq)</strong>
-						<p>This is the fastq file containing sequencing data from a plasmid library. The library should be derived from the reference sequence (provided above). The tool will use this file to compare against the reference to identify variable sites.</p>
+					<li><strong>Data Sequence 1(.fastq)</strong>
+						<p>This is the fastq file containing sequencing data from the pre mutant plasmid library. The library should be derived from the reference sequence (provided above). The tool will use this file to compare against the reference to identify variable sites. The program cycles through the library twice for each variable site first identifying all forward strands to the reference sequence then taking the reverse complement of the reference sequence to match to the library. Be careful that the guide sequences used in the reference sequence reverse complement are not present anywhere on the forward strand. If this is unavoidable you can expand the range of sites, the program uses to identify variable sites or add a barcode sequence (see below).</p>
 					</li>
-					<li><strong>Output File Name</strong>
-						<p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification.</p>
-					</li>
+                    <li><strong>Data Sequence 2(.fastq)</strong>
+                        <p>This is the fastq file requires the same format as Data Sequence 1. Data Sequence 2 should be sequenced from the result of mutating the plasmids generated Data Sequence 1.</p>
+                    </li>
 					<li><strong>Number of Matching Nucleotides (5' End)</strong>
-						<p>This value specifies how many nucleotides, starting from the 5' end of the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
+						<p>This value specifies how many nucleotides, starting from the 5' end of variable the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
 					</li>
 					<li><strong>Number of Matching Nucleotides (3' End)</strong>
 						<p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
 					</li>
 					<li><strong>Phred Score Threshold</strong>
-						<p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable.</p>
+						<p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable. If the optional barcode option is used the barcode will use this Phred score value.</p>
 					</li>
-					<li><strong>Number of Variable Sites</strong>
-						<p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
+					<li><strong>Output File Name</strong>
+						<p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification. The file will be created in the Excel format (.xlsx).</p>
 					</li>
-					<li><strong>(Optional) Barcode Check</strong>
-						<p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis.</p>
+                    <li><strong>Wild type amino acid</strong>
+                        <p>Enter the wild type amino acid present at the variable site.</p>
 					</li>
 				</ul>
 			
