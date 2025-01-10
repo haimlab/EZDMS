@@ -133,6 +133,7 @@ All Pages CSS
 .container input[type="file"],
 .container input[type="text"],
 .container input[type="number"],
+.container input[type="image"],
 .container button {
     width: 100%; 
     padding: 10px 15px; 
