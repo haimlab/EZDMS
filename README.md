@@ -60,6 +60,6 @@ python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" 
 
  pyinstaller --onefile --add-data "templates/:templates" app.py
 
- --onefile --windowed --add-data "templates:templates" --icon=FGV.icns app.py 
+ pyinstaller --onefile --add-data "templates:templates"  --add-data "modules:modules" app.py 
 
  pyinstaller --onefile --windowed --add-data "templates:templates" --icon=FGV.icns app.py 
