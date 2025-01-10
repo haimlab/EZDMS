@@ -66,7 +66,7 @@ def start_flask():
 
 	@app.route('/TEST',methods=['GET', 'POST']) 
 	def test():
-		return render_template("Index.html")
+		return render_template("Test.html")
 
 	@app.route('/find_variable_sites',methods=['GET', 'POST']) 
 	def find_variable_sites(): 
@@ -195,7 +195,7 @@ def start_flask():
 
 def start_gui():
     # Start the webview window after Flask is started.
-    webview.create_window("FQ Search", 'http://127.0.0.1:5000/startpage', js_api=JSAPI(), width=200, height=160)
+    webview.create_window("FQ Search", 'http://127.0.0.1:5000/startpage', js_api=JSAPI(), width=200, height=200)
     webview.start()
 
 if __name__ == '__main__':
