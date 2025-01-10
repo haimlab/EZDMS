@@ -9,10 +9,25 @@
     </div>
 </div>
 
+<style>
+
+    #div1, #div2, #div3 {
+      float: left;
+      width: 100px;
+      height: 100px;
+      margin: 10px;
+      padding: 10px;
+      border: 2px solid black;
+    }
+
+</style>
+
+
+
 <div class="container">
     <!-- Box 1 -->
-    <div class="box">
-        <div class="center-form">
+    <div class="box"  style="width: 160%;" style='margin-top:0;margin-left:100;margin-right:10;'>
+        <div class="center-form" >
             <form method="post" enctype="multipart/form-data">
                 <div class="center">
                     <label for="fastaFile">Reference sequence (.fasta):</label>
@@ -45,54 +60,150 @@
             </form>
         </div>
     </div>
+    
 
     <!-- Box 2 -->
-    <div class="box">
-        <div class="help-section">
-            <h2>Variable Sites</h2>
-            <p>The <strong>Find Variable Sites</strong> tool requires eight input parameters. Below is a detailed explanation of each input:</p>
+    <div style="display: flex; flex-direction: column; flex-grow: 1;">
+        <div class="box"   style="width: 55%;">
+            <div class="help-section">
+                  <!-- The clickable image -->
+                  <h2>Sample files</h2>
 
-            <p>
-                This tool processes a FASTQ library and generates an Excel spreadsheet with the counts of all combinations of variable sites detected. Sequences can also be further subdivided using the barcode option, which creates an additional tab in the spreadsheet that counts only the sequences containing the specified barcode.</p>
-            <ul>
-                <li><strong>Reference Sequence (.fasta)</strong>
-                    <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library.  
-                        The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format.  
-                        The rest of the Reference Sequence should match the original plasmid sequence the library is based off of.  
-                        This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). 
-                        Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library. 
-                    </p>
-                </li>
-                <li><strong>Data Sequence (.fastq)</strong>
-                    <p>This is the fastq file containing sequencing data from a plasmid library. 
-                        The library should be derived from the reference sequence (provided above).  
-                        The tool will use this file to compare against the reference to identify variable sites. 
-                        The program cycles through the library twice for each variable site first identifying all forward strands to the reference sequence then taking the reverse complement of the reference sequence to match to the library. 
-                        Be careful that the guide sequences used in the reference sequence reverse complement are not present anywhere on the forward strand. If this is unavoidable you can expand the range of sites, the program uses to identify variable sites or add a barcode sequence (see below). 
-                    </p>
-                </li>
-                <li><strong>Output File Name</strong>
-                    <p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification. The file will be created in the Excel format (.xlsx).</p>
-                </li>
-                <li><strong>Number of Matching Nucleotides (5' End)</strong>
-                    <p>This value specifies how many nucleotides, starting from the 5' end of variable the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
-                </li>
-                <li><strong>Number of Matching Nucleotides (3' End)</strong>
-                    <p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
-                </li>
-                <li><strong>Phred Score Threshold</strong>
-                    <p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable. If the optional barcode option is used the barcode will use this Phred score value. </p>
-                </li>
-                <li><strong>Number of Variable Sites</strong>
-                    <p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
-                </li>
-                <li><strong>(Optional) Barcode Check</strong>
-                    <p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis. If multiple Bar codes are placed below in a comma separated list the program will create a separate Excel tab in the output file with each tab only accounting for sequences that match the barcode.
-                        
-                        Example (ATTGGCC,TTGGCCCC,TTTTTAAG). </p>
-                </li>
-            </ul>
+                    <!-- Drop zones -->
+                    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="static/A0L.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" width="100" height="100"style="cursor: pointer;">
+
+                    </div>
+
+                    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" width="100" height="100" style="cursor: pointer;">
+                    </div>
+
+                    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                        <img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" width="100" height="100" style="cursor: pointer;">
+                    </div>
+
+                    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+        </div>
+        <div class="box"  style="width: 55%;">
+            <div class="help-section">
+                <h2>Variable Sites</h2>
+                <p>The <strong>Find Variable Sites</strong> tool requires eight input parameters. Below is a detailed explanation of each input:</p>
+
+                <p>
+                    This tool processes a FASTQ library and generates an Excel spreadsheet with the counts of all combinations of variable sites detected. Sequences can also be further subdivided using the barcode option, which creates an additional tab in the spreadsheet that counts only the sequences containing the specified barcode.</p>
+                <ul>
+                    <li><strong>Reference Sequence (.fasta)</strong>
+                        <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library.  
+                            The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format.  
+                            The rest of the Reference Sequence should match the original plasmid sequence the library is based off of.  
+                            This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). 
+                            Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library. 
+                        </p>
+                    </li>
+                    <li><strong>Data Sequence (.fastq)</strong>
+                        <p>This is the fastq file containing sequencing data from a plasmid library. 
+                            The library should be derived from the reference sequence (provided above).  
+                            The tool will use this file to compare against the reference to identify variable sites. 
+                            The program cycles through the library twice for each variable site first identifying all forward strands to the reference sequence then taking the reverse complement of the reference sequence to match to the library. 
+                            Be careful that the guide sequences used in the reference sequence reverse complement are not present anywhere on the forward strand. If this is unavoidable you can expand the range of sites, the program uses to identify variable sites or add a barcode sequence (see below). 
+                        </p>
+                    </li>
+                    <li><strong>Output File Name</strong>
+                        <p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification. The file will be created in the Excel format (.xlsx).</p>
+                    </li>
+                    <li><strong>Number of Matching Nucleotides (5' End)</strong>
+                        <p>This value specifies how many nucleotides, starting from the 5' end of variable the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
+                    </li>
+                    <li><strong>Number of Matching Nucleotides (3' End)</strong>
+                        <p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
+                    </li>
+                    <li><strong>Phred Score Threshold</strong>
+                        <p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable. If the optional barcode option is used the barcode will use this Phred score value. </p>
+                    </li>
+                    <li><strong>Number of Variable Sites</strong>
+                        <p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
+                    </li>
+                    <li><strong>(Optional) Barcode Check</strong>
+                        <p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis. If multiple Bar codes are placed below in a comma separated list the program will create a separate Excel tab in the output file with each tab only accounting for sequences that match the barcode.
+                            
+                            Example (ATTGGCC,TTGGCCCC,TTTTTAAG). </p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Links for the images (can be different files or URLs)
+     const fileLink1 = 'static/BNKWKD_3_Library_375X.fastq';  // Replace with the link to the first file
+     const fileLink2 = 'static/Ref_375X.fa'; // Replace with the link to the second file
+     const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
+     // Image 1 (drag1) click handler to open the file in a new tab
+     document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
+       window.open(fileLink1, '_blank');  // Opens the first file in a new tab
+     });
+ 
+     // Image 2 (drag2) click handler to open the file in a new tab
+     document.getElementById('Ref_375X.fa').addEventListener('click', function() {
+       window.open(fileLink2, '_blank');  // Opens the second file in a new tab
+     });
+
+          // Image 2 (drag2) click handler to open the file in a new tab
+    document.getElementById('Variable_Sites_BNKWKD.xlsx').addEventListener('click', function() {
+       window.open(fileLink3, '_blank');  // Opens the second file in a new tab
+     });
+
+     
+ 
+     let isDragging = false;
+ 
+     // Detect if user is dragging or clicking
+     img.addEventListener('mousedown', () => {
+       isDragging = false;  // Assume it's a click initially
+     });
+ 
+     img.addEventListener('mousemove', () => {
+       isDragging = true;  // It's a drag if mouse moves
+     });
+ 
+     // If it's not a drag, open the file in a new tab
+     img.addEventListener('click', (e) => {
+       if (isDragging) {
+         e.preventDefault();  // Prevent the default click action if it's a drag
+         isDragging = false;
+       } else {
+         openFileInNewTab(fileUrl);
+       }
+     });
+ 
+     // Function to open the file in a new tab
+     function openFileInNewTab(url) {
+       window.open(url, '_blank');  // Open the file URL in a new tab
+     }
+ 
+     function drag(ev) {
+       ev.dataTransfer.setData("text", ev.target.id);  // Store image ID during drag
+     }
+ 
+     // Function to allow the drop on the target divs or text input
+     function allowDrop(ev) {
+       ev.preventDefault();  // Allow the drop
+     }
+ 
+     // Function to handle the drop event
+     function drop(ev) {
+       ev.preventDefault();  // Prevent default drop behavior
+ 
+       var data = ev.dataTransfer.getData("text");  // Get the dragged element ID
+       var draggedElement = document.getElementById(data);
+ 
+       // Append the dragged image to the target div
+       ev.target.appendChild(draggedElement);
+ 
+       // Check if the drop target is the text input field
+     }
+</script>
 {% endblock %}
