@@ -101,8 +101,8 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
         return Preference_dict
 
 if __name__ == '__main__':
-    input_fasta_file = 'sample/Ref_375X.fa' 
-    in_put_fastq = "BNKWKD_2_A3R5.7_375X426X.fastq"
+    input_fasta_file = 'Work_flow/Reference.fa' 
+    in_put_fastq = "/Users/smccarthypotter/FQ_VSearch/Work_flow/Plasmid Library_S375X.fastq"
     in_put_fastq2 = "sample/GGZBQ6_1_DMS_DX_1.fastq"
     out_file = "" 
     phread_score = 20 
