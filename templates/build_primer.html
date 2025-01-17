@@ -3,19 +3,6 @@
 <!-- {% block title %}Build Primer{% endblock %} -->
 
 {% block content %}
-
-<style>
-
-    #div1, #div2, #div3 {
-      float: left;
-      width: 100px;
-      height: 100px;
-      margin: 10px;
-      padding: 10px;
-      border: 2px solid black;
-    }
-
-</style>
 <div class="title-container">
     <div class="inner-title">
         <h1 class="page-title">Build Primer</h1>
@@ -24,7 +11,7 @@
     <!-- Container for the two boxes -->
     <div class="container">
         <!-- Box 1 -->
-        <div class="box" style="width: 160%;" style='margin-top:0;margin-left:100;margin-right:10;' >
+        <div class="box"  >
 			<div class="center-form">
 				<form method="post" enctype="multipart/form-data">
 					<div class="center">
@@ -43,30 +30,27 @@
         </div>
 
         <!-- Box 2 -->
-		<div style="display: flex; flex-direction: column; flex-grow: 1;">
-			<div class="box"   style="width: 55%;">
-				<div class="help-section">
+		<div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
+			<div class="box2" >
+				<div class="section">
 					  <!-- The clickable image -->
 					  <h2>Sample files</h2>
-	
-						<!-- Drop zones -->
-						<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-							<img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" width="100" height="100" style="cursor: pointer;">
+					  <div class="file-container">
+						<!-- Input files -->
+						<div class="file-box input-file">
+							<img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" alt="FASTA_REF" />
+							<p>FASTA Ref</p>
 						</div>
-
-						<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-							<img src="static/Primer.png" draggable="true" ondragstart="drag(event)" id="Ref_375X_primer.txt" width="100" height="100"style="cursor: pointer;">
-	
+						<!-- Output file -->
+						<div class="file-box output-file">
+							<img src="static/Primer.png" draggable="true" ondragstart="drag(event)" id="Ref_375X_primer.txt" alt="TEXT_FILE" />
+							<p>TEXT Output</p>
 						</div>
-
-						<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-
-						<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-	
 					</div>
+
 			</div>
-			<div class="box"  style="width: 55%;">
-				<div class="help-section">
+			<div class="box2" >
+				<div class="section-below">
 					<h2>Build primer</h2>
 					<p>The <strong>Build primer</strong> tool requires two input parameters. Below is a detailed explanation of each:</p>
 					<p>The tool creates the 4 primers needed to create a plasmid library from a reference sequence. 
@@ -94,26 +78,24 @@
 				</div>
         </div>
     </div>
+</div>
+</div>
+</div>	
 	<script>
 		// Links for the images (can be different files or URLs)
-		 const fileLink1 = 'static/Ref_375X_primer.txt';  // Replace with the link to the first file
-		 const fileLink2 = 'static/Ref_375X.fa'; // Replace with the link to the second file
-		 const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
+		 const fileLink1 = 'static/Ref_375X.fa';  // Replace with the link to the first file
+		 const fileLink2 = 'static/Ref_375X_primer.txt'; // Replace with the link to the second file
+		
 		 // Image 1 (drag1) click handler to open the file in a new tab
-		 document.getElementById('Ref_375X_primer.txt').addEventListener('click', function() {
+		 document.getElementById('Ref_375X.fa').addEventListener('click', function() {
 		   window.open(fileLink1, '_blank');  // Opens the first file in a new tab
 		 });
 	 
 		 // Image 2 (drag2) click handler to open the file in a new tab
-		 document.getElementById('Ref_375X.fa').addEventListener('click', function() {
+		 document.getElementById('Ref_375X_primer.txt').addEventListener('click', function() {
 		   window.open(fileLink2, '_blank');  // Opens the second file in a new tab
 		 });
-	
-			  // Image 2 (drag2) click handler to open the file in a new tab
-		document.getElementById('Variable_Sites_BNKWKD.xlsx').addEventListener('click', function() {
-		   window.open(fileLink3, '_blank');  // Opens the second file in a new tab
-		 });
-	
+
 		 
 	 
 		 let isDragging = false;

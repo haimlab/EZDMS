@@ -4,18 +4,6 @@
 
 {% block content %}
 
-<style>
-
-    #div1, #div2, #div3 {
-      float: left;
-      width: 100px;
-      height: 100px;
-      margin: 10px;
-      padding: 10px;
-      border: 2px solid black;
-    }
-
-</style>
 <div class="title-container">
     <div class="inner-title">
         <h1 class="page-title">Preferences</h1>
@@ -24,7 +12,7 @@
     <!-- Container for the two boxes -->
     <div class="container" >
         <!-- Box 1 -->
-        <div class="box" style="width: 160%;" style='margin-top:0;margin-left:100;margin-right:100;'>
+        <div class="box">
 			<div class="center-form">
 				<form method="post" enctype="multipart/form-data">
 					<div class="center">
@@ -92,31 +80,32 @@
         </div>
 
         <!-- Box 2 -->
-        <div style="display: flex; flex-direction: column; flex-grow: 1;">
-            <div class="box"   style="width: 55%;">
-                <div class="help-section">
+        <div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
+            <div class="box2" >
+                <div class="section">
                 <!-- The clickable image -->
                     <h2>Sample files</h2>
-
+                    <div class="file-container">
                     <!-- Drop zones -->
-                    <div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" width="100" height="100"style="cursor: pointer;">
+                  <div class="file-box input-file">
+                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" alt="FASTQ" />
+                    <p>FASTA Ref</p>
+                  </div>
+                  <div class="file-box input-file">
+                      <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" alt="FASTA_REF" />
+                      <p>FASTQ File</p>
+                  </div>
+                  <!-- Output file -->
+                  <div class="file-box output-file">
+                      <img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" alt="EXCEL_FILE" />
+                      <p>Excel Output</p>
+                  </div>
+              </div>
 
-                    </div>
 
-                    <div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" width="100" height="100" style="cursor: pointer;">
-                    </div>
-
-                    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-                        <img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" width="100" height="100" style="cursor: pointer;">
-                    </div>
-
-                    <div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
-                </div>
             </div>
-            <div class="box"  style="width: 55%;">
-                <div class="help-section">
+            <div class="box2"  >
+                <div class="section-below">
                     <h2>Amino Acid Preference</h2>
                     <p>The <strong>Find Amino Acid Preference</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
 
@@ -155,16 +144,16 @@
 </div>
     <script>
         // Links for the images (can be different files or URLs)
-         const fileLink1 = 'static/BNKWKD_3_Library_375X.fastq';  // Replace with the link to the first file
-         const fileLink2 = 'static/Ref_375X.fa'; // Replace with the link to the second file
+         const fileLink1 = 'static/Ref_375X.fa';  // Replace with the link to the first file
+         const fileLink2 = 'static/BNKWKD_3_Library_375X.fastq'; // Replace with the link to the second file
          const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
          // Image 1 (drag1) click handler to open the file in a new tab
-         document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
+         document.getElementById('Ref_375X.fa').addEventListener('click', function() {
            window.open(fileLink1, '_blank');  // Opens the first file in a new tab
          });
      
          // Image 2 (drag2) click handler to open the file in a new tab
-         document.getElementById('Ref_375X.fa').addEventListener('click', function() {
+         document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
            window.open(fileLink2, '_blank');  // Opens the second file in a new tab
          });
     
