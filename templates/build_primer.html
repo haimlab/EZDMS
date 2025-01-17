@@ -24,7 +24,7 @@
     <!-- Container for the two boxes -->
     <div class="container">
         <!-- Box 1 -->
-        <div class="box">
+        <div class="box" style="width: 160%;" style='margin-top:0;margin-left:100;margin-right:10;' >
 			<div class="center-form">
 				<form method="post" enctype="multipart/form-data">
 					<div class="center">
@@ -50,20 +50,19 @@
 					  <h2>Sample files</h2>
 	
 						<!-- Drop zones -->
-						<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
-							<img src="static/A0L.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" width="100" height="100"style="cursor: pointer;">
-	
-						</div>
-	
 						<div id="div2" ondrop="drop(event)" ondragover="allowDrop(event)">
-							<img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" width="100" height="100" style="cursor: pointer;">
+							<img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" width="100" height="100" style="cursor: pointer;">
 						</div>
+
+						<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)">
+							<img src="static/Primer.png" draggable="true" ondragstart="drag(event)" id="Ref_375X_primer.txt" width="100" height="100"style="cursor: pointer;">
 	
-						<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)">
-							<img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" width="100" height="100" style="cursor: pointer;">
 						</div>
-	
+
 						<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+						<div id="div3" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	
 					</div>
 			</div>
 			<div class="box"  style="width: 55%;">
@@ -97,11 +96,11 @@
     </div>
 	<script>
 		// Links for the images (can be different files or URLs)
-		 const fileLink1 = 'static/BNKWKD_3_Library_375X.fastq';  // Replace with the link to the first file
+		 const fileLink1 = 'static/Ref_375X_primer.txt';  // Replace with the link to the first file
 		 const fileLink2 = 'static/Ref_375X.fa'; // Replace with the link to the second file
 		 const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
 		 // Image 1 (drag1) click handler to open the file in a new tab
-		 document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
+		 document.getElementById('Ref_375X_primer.txt').addEventListener('click', function() {
 		   window.open(fileLink1, '_blank');  // Opens the first file in a new tab
 		 });
 	 
