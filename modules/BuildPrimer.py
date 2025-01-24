@@ -2,6 +2,8 @@ from modules.find_variable_sites import fasta_to_single_line_string,reverse_comp
 
 def main(input_fasta_file,Out_path):
 
+    Out_path = Out_path + ".txt"
+
 
     is_file_fasta = True
 
@@ -75,6 +77,8 @@ def main(input_fasta_file,Out_path):
         for index, char in enumerate(FP1[:-8]):
             FP1_list_problem.append(FP1[index:index+8])
 
+        f.write("\n\n")
+
         f.write("FP1_list_problem:\n")
         for index,x in enumerate(FP1_list_problem):
             if ''.join(reverse_complement(x)) in FP1_list_problem:
@@ -99,12 +103,15 @@ def main(input_fasta_file,Out_path):
         for index, char in enumerate(RP1[:-8]):
             RP1_list_problem.append(RP1[index:index+8])
 
+        f.write("\n")
+
+
         f.write("RP1_list_problem:\n")
         for index,x in enumerate(RP1_list_problem):
             if ''.join(reverse_complement(x)) in RP1_list_problem:
                 f.write(str(x)+" "+str(index)+" "+str(RP1_list_problem.index(''.join(reverse_complement(x)))))
 
-        f.write("\n")
+        f.write("\n\n")
 
         RP2_list_problem = []
 
