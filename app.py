@@ -64,9 +64,9 @@ def start_flask():
 		return send_from_directory('templates/css', filename)
 	
 
-	@app.route('/TEST',methods=['GET', 'POST']) 
+	@app.route('/EGG',methods=['GET', 'POST']) 
 	def test():
-		return render_template("Test.html")
+		return render_template("EGG.html")
 
 	@app.route('/find_variable_sites',methods=['GET', 'POST']) 
 	def find_variable_sites(): 

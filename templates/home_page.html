@@ -3,13 +3,68 @@
 <!-- {% block title %}Home Page{% endblock %} -->
 
 {% block content %}
-<div class="banner">
-    Welcome to My Web Page
+<div  cladss="box3">
+    <div class="section-below">
+        <h2>EZDMS</h2>
+        
+        <p>
+            <b>Easy DMS</b> This is a Graphical user interface designed with tools to help create and interpret mutant plasmid libraires.
+            <br>
+            
+            First Variable sites count the number of amino acid located in a fastq file and all the frequency of each combination of multiple variable sites. 
+
+            <br>
+
+            Second Preferences calculates the enrichment ratio of the amino acids in the libraries after they are placed under selective pressure. 
+            
+            <br>
+            
+            Finaly Build primers assistants in generating the basic primers required to make these mutant plasmid libraries. 
+            
+
+        </p>
+    </div>
 </div>
-<div class="container">
-    <!-- Specific content for the Home page goes here -->
-    <p>This is the main area of the home page where specific content can be placed.</p>
-    <!-- You can add more HTML elements as needed -->
+<div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
+    <div   class="box2" >
+        <div class="section">
+            <h2>Programs</h2>
+            <div class="file-container2">
+                <!-- Input files -->
+                <a href="/find_variable_sites" style="text-decoration: none;">
+                <div class="file-box2 input-file" onclick="window.location.href='newpage.html';">
+                    <img src="static/EZDMS.png"   id="EZDMS" alt="FASTA_REF" />
+                    <p><b>Variable Sites</b></p>
+                    <br>
+                    <p>
+                        This tool processes a FASTQ library and generates an Excel spreadsheet with the counts of all combinations of variable sites detected. Sequences can also be further subdivided using the barcode option, which creates an additional tab in the spreadsheet that counts only the sequences containing the specified barcode.
+                    </p>
+                </div>
+                </a>
+                <a href="/preference" style="text-decoration: none;">
+                <div class="file-box2 input-file">
+                    <img src="static/Preferences.png" d id="Preferences" alt="FASTQ" />
+                    <p><b>Amino Acid Preference</b></p>
+
+                    <br> 
+
+                    <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site. It normalizes the mutations against the wild-type sequences for accurate analysis. The output format is an excel file with the normalized amino acid prefrences.
+                    </p>
+                    
+                </div>
+                </a>
+                <!-- Output file -->
+                <a href="/build_primer" style="text-decoration: none;">
+                <div class="file-box2 output-file">
+                    <img src="static/Build_primer_800.png" id="Build_primer" alt="EXCEL_FILE" />
+                    <p><b>Build Primer</b></p>
+                    <br>
+                    <p>
+                        The tool creates the 4 primers needed to create a plasmid library from a reference sequence in a text file (txt).</p>
+                </div>
+                </a>
+            </div>
+        </div>
 </div>
 
 
