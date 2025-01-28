@@ -42,6 +42,59 @@ number of variable sites: default=2
 
  
 
+ To measure how the selective pressure from Temsavir affects amino acid preference in HIV Env, AD8 plasmids were mutated to contain variable sites at site 375 and 426. These sites were chosen due to their high rate of mutation in response to Temsavir. Overlap PCR was used to generate the two NNK sites, and a homologous barcode sequence was inserted to differentiate WT plasmids from Mutant plasmids. The resulting mutant plasmid library was sequenced using Oxford nano pore technology to generate a fastq file. The fastq library was interpreted using EZDMS Amino Count tool which matches the nucleotides flanking a variable site in barcoded sequences to confirm an even distribution of amino acids at the expected NNK sites.  
+
+293 T Cells were transformed using mutant plasmid library to act as a source of HIV virions. These virions are produced from multiple plasmids and cannot be used to test the fitness of any induvial plasmid strain but were sequence and analyzed with EZDMS Amino ACID count to ensure there was an adequate number of mutant plasmids with evenly distributed amino acids. The first round of transfection has an even distribution of amino acids as multiple plasmids are in each cell allowing unfit genes to be passed on in fit capsids.  
+
+Round two of transfection was performed with a Low MOI viral passage was on A3R5.7 T-cells to dilute the plasmid so that each cell would only being infected once. Each cell only being infected once the produced capsid should match the genotype, they contain allowing for selective pressures to eliminate unfit mutations. Four days after infection the HIV RNA was extracted and sequenced with Oxford nano pore technology.  
+
+Amino Acid Preferences are then calculated using EZDMS utilizing the fastq sequences from round 1 as the preselection library and the fastq sequences from round 2 as the post selection library section library. The Enrichment Ratio  
+𝜑𝑝
+𝜑
+p
+ 
+ for amino acid ‘
+𝑦 
+y
+ 
+ 
+’ and a wildtype amino acid of ‘
+𝑤𝑡 
+w
+t
+ 
+ 
+’ is calculated as the ratio of ‘
+𝑦𝑚
+y
+m
+ 
+’ to ‘
+𝑤𝑡𝑚
+w
+t
+m
+ 
+’ after infection divided by the ratio of ‘
+𝑦𝑝
+y
+p
+ 
+’ to ‘
+𝑤𝑡𝑝
+w
+t
+p
+ 
+’ before infection.  
+
+The Enrichment Ratio for an amino acid at a single site is rescaled to one based on the sum of all Enrichment Ratios to generate the amino acid preference 
+𝜋𝑦
+𝜋
+y
+ 
+.  
+
  
 
  

@@ -57,6 +57,11 @@ def start_flask():
 
 	@app.route('/',methods=['GET', 'POST']) 
 	def home():
+		files = os.listdir(upload_folder)
+		for file in files:
+			file_path = os.path.join(upload_folder, file)
+			if os.path.isfile(file_path):
+				os.remove(file_path)
 		return render_template("home_page.html")
 	
 	@app.route('/css/<path:filename>')
@@ -158,7 +163,7 @@ def start_flask():
 				file_fastq_2 = request.files['file_fastq_2'] 
 				file_fasta_1.save(os.path.join(app.config['UPLOAD_FOLDER'],file_fasta_1.filename)) 
 				file_fastq_1.save(os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)) 
-				file_fastq_2.save(os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)) 
+				file_fastq_2.save(os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename))
 			except:
 				raise CE.FileNotFound("invalid file, please check your files")
 			
@@ -167,20 +172,24 @@ def start_flask():
 			distance_5_prime = int(request.form.get('distance_5_prime'))
 			distance_3_prime = int(request.form.get('nucleotide_match'))
 
-
-			variable_sites_number = 1
+			variable_sites_number = int(request.form.get('variable_sites_number0'))
 			print(variable_sites_number)
 
+			wild_type_amino_acid = request.form.get('wild_type_amino_acid_1')
+			wild_type_amino_acid_2 = request.form.get('wild_type_amino_acid_2')
 
-			wild_type_amino_acid = request.form.get('variable_sites_number')
+			if variable_sites_number > 1:
+				wild_type_amino_acid = f"{wild_type_amino_acid},{wild_type_amino_acid_2}"
+
+			print("wild_type_amino_acid",wild_type_amino_acid,wild_type_amino_acid_2)
 
 			file_fasta_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fasta_1.filename)
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)
 			file_fastq_2_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)
 		
-			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(1))
+			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
 
-			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(1))
+			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
 
 			print(out_path)
 

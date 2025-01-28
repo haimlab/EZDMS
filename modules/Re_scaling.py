@@ -43,8 +43,9 @@ def write_out_file(out_file,amino_dic,region_marker_list):
 
     return out_file
 
-def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
-    WT = WT + "\t"
+def main(WT_list,pre_amino_dict,post_amino_dict,out_file = "1"):
+
+    WT = "\t".join(WT_list.split(","))+"\t"
 
     for key in pre_amino_dict.keys():
         pre_amino_dict[key] = pre_amino_dict[key]/2
@@ -60,8 +61,13 @@ def main(WT,pre_amino_dict,post_amino_dict,out_file = "1"):
     post_amino_sum = sum(post_amino_list)
 
     Enrichment_dict = {}
+    print(pre_amino_dict[WT])
     pre_amino_wild_type = pre_amino_dict[WT]/pre_amino_sum
+    if pre_amino_wild_type == 0:
+        pre_amino_wild_type = 1
     post_amino_wild_type = post_amino_dict[WT]/post_amino_sum
+    if post_amino_wild_type == 0:
+        post_amino_wild_type= 1
     for key in pre_amino_dict.keys():
         try:
 
@@ -113,9 +119,9 @@ if __name__ == '__main__':
     WT = 'S'
 
 
-    #pre_amino_dict = FVS.main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
-    #post_amino_dict = FVS.main(input_fasta_file,in_put_fastq2,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
-    #print(main(WT,pre_amino_dict,post_amino_dict,"here"))
+    pre_amino_dict = FVS.main(input_fasta_file,in_put_fastq,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
+    post_amino_dict = FVS.main(input_fasta_file,in_put_fastq2,out_file,True,True,phread_score,five_prime,three_prime,variable_sites)
+    print(main(WT,pre_amino_dict,post_amino_dict,"here"))
 
 
 

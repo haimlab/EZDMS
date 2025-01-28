@@ -241,7 +241,7 @@ def test_load_amino_dic_19():
 
 def test_main_20():
     input_fasta_file = "sample/Ref_375X426X" 
-    in_put_fastq = "sample/BNKWKD_3_Library_375X.fastq"
+    in_put_fastq = "static/BNKWKD_3_Library_375X.fastq"
     out_file = "" 
     phread_score = 20 
     five_prime = 8

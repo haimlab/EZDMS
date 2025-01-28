@@ -35,10 +35,12 @@
                 
                         <label for="lname">Output file name:</label>
                         <input type="text" id="file_name" name="file_name" value="your_out_put_file"><br><br>
-                
 
-                        <label for="letter_selection">Wild type amino acid:</label>
-                        <select id="variable_sites_number" name="variable_sites_number">
+                        <label for="fname">Number of variable sites:</label>
+                        <input type="number" id="variable_sites_number0" name="variable_sites_number0" value="1" min="1" max="50"><br><br>
+
+                        <label for="letter_selection">Wild type amino acid site 1:</label>
+                        <select id="wild_type_amino_acid_1" name="wild_type_amino_acid_1">
                             <option value=".">.</option>
                             <option value="A">A</option>
                             <option value="C">C</option>
@@ -67,6 +69,35 @@
 
                         </select>
 
+                        <label for="letter_selection_1">Wild type amino acid site 2:</label>
+                        <select id="wild_type_amino_acid_2" name="wild_type_amino_acid_2">
+                            <option value=".">.</option>
+                            <option value="A">A</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="G">G</option>
+                            <option value="H">H</option>
+                            <option value="I">I</option>
+
+                            <option value="K">K</option>
+                            <option value="L">L</option>
+                            <option value="M">M</option>
+                            <option value="N">N</option>
+
+                            <option value="P">P</option>
+                            <option value="Q">Q</option>
+                            <option value="R">R</option>
+                            <option value="S">S</option>
+                            <option value="T">T</option>
+
+                            <option value="V">V</option>
+                            <option value="W">W</option>
+                            <option value="X">X</option>
+                            <option value="Y">Y</option>
+
+                        </select>
                         <p></p>
 
                     
@@ -93,17 +124,17 @@
                       <p>FASTQ File</p>
                   </div>
                   <div class="file-box input-file">
-                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" alt="FASTQ" />
-                    <p>FASTA Ref</p>
+                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq" alt="FASTQ" />
+                    <p>FASTA Ref Sequence 1</p>
                   </div>
                   <div class="file-box input-file">
-                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" alt="FASTQ" />
-                    <p>FASTA Ref</p>
+                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq" alt="FASTQ" />
+                    <p>FASTA Ref Sequence 2</p>
                   </div>
 
                   <!-- Output file -->
                   <div class="file-box output-file">
-                      <img src="static/FGV.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" alt="CSV_FILE" />
+                      <img src="static/Amino_Acid_Preference.png" draggable="true" ondragstart="drag(event)" id="Preferences_ref.csv" alt="CSV_FILE" />
                       <p>CSV Output</p>
                   </div>
               </div>
@@ -151,20 +182,26 @@
     <script>
         // Links for the images (can be different files or URLs)
          const fileLink1 = 'static/Ref_375X.fa';  // Replace with the link to the first file
-         const fileLink2 = 'static/BNKWKD_3_Library_375X.fastq'; // Replace with the link to the second file
-         const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
+         const fileLink4 = 'static/S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq'; // Replace with the link to the second file
+         const fileLink5 = 'static/H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq';
+         const fileLink3 = 'static/Preferences_ref.csv';
          // Image 1 (drag1) click handler to open the file in a new tab
          document.getElementById('Ref_375X.fa').addEventListener('click', function() {
            window.open(fileLink1, '_blank');  // Opens the first file in a new tab
          });
      
          // Image 2 (drag2) click handler to open the file in a new tab
-         document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
-           window.open(fileLink2, '_blank');  // Opens the second file in a new tab
+         document.getElementById('S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq').addEventListener('click', function() {
+           window.open(fileLink4, '_blank');  // Opens the second file in a new tab
          });
     
+         // Image 2 (drag2) click handler to open the file in a new tab
+         document.getElementById('H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq').addEventListener('click', function() {
+           window.open(fileLink5, '_blank');  // Opens the second file in a new tab
+         });
+
               // Image 2 (drag2) click handler to open the file in a new tab
-        document.getElementById('Variable_Sites_BNKWKD.xlsx').addEventListener('click', function() {
+        document.getElementById('Preferences_ref.csv').addEventListener('click', function() {
            window.open(fileLink3, '_blank');  // Opens the second file in a new tab
          });
     
