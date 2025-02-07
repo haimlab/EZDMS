@@ -39,7 +39,7 @@
                         <label for="fname">Number of variable sites:</label>
                         <input type="number" id="variable_sites_number0" name="variable_sites_number0" value="1" min="1" max="50"><br><br>
 
-                        <br>
+                        
                         <br>
 
                         <label for="letter_selection">Wild type amino acid site 1:</label>
@@ -108,6 +108,12 @@
                         </select>
                         <p></p>
 
+                        <label for="lname">(optional) Data sequence 1 barcode check:</label>
+                        <input type="text" id="barcode_1" name="barcode_1" value=""><br><br>
+
+                        <label for="lname">(optional) Data sequence 2 barcode check:</label>
+                        <input type="text" id="barcode_2" name="barcode_2" value=""><br><br>
+
                     
                         </div>
 
@@ -129,15 +135,15 @@
 
                     <div class="file-box input-file">
                       <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" alt="FASTA_REF" />
-                      <p>FASTQ File</p>
+                      <p>FASTA Ref</p>
                   </div>
                   <div class="file-box input-file">
                     <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq" alt="FASTQ" />
-                    <p>FASTA Ref Sequence 1</p>
+                    <p>FASTQ File Sequence 1</p>
                   </div>
                   <div class="file-box input-file">
                     <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq" alt="FASTQ" />
-                    <p>FASTA Ref Sequence 2</p>
+                    <p>FASTQ File Sequence 2</p>
                   </div>
 
                   <!-- Output file -->
