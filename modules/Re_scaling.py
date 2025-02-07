@@ -17,7 +17,7 @@ def calculatePreference(EnrichmentRatioDict,PreferenceSite):
     Preference = EnrichmentRatioDict[PreferenceSite]/sum(EnrichmentRatioList)
     return Preference
 
-def write_out_file(out_file,amino_dic,region_marker_list):
+def write_out_file(out_file,amino_dic,region_marker_list,add_column = False):
     """
     :
     Error in write_out_file
@@ -33,17 +33,24 @@ def write_out_file(out_file,amino_dic,region_marker_list):
             f.write(f"Site_{index+1}:" + str(item[0]))
             f.write(",")
 
-        f.write("amino_acid_counter")
-        f.write("\n")
+        f.write("preferences")
+        if add_column:
+            f.write(",rescaled to inputs")
 
-        for key in amino_dic .keys():
-            f.write(",".join(key.split("\t")) +str(amino_dic[key]) +"\n")
+        f.write("\n")
+        print(amino_dic.keys())
+        if add_column:
+            for key in amino_dic.keys():
+                f.write(",".join(key.split("\t")) +str(amino_dic[key][0])+","+str(amino_dic[key][1]) +"\n")
+        else:
+            for key in amino_dic.keys():
+                f.write(",".join(key.split("\t")) +str(amino_dic[key]) +"\n")
 
     f.close
 
     return out_file
 
-def main(WT_list,pre_amino_dict,post_amino_dict,out_file = "1"):
+def main(WT_list,pre_amino_dict,post_amino_dict,out_file = "1",add_column = False):
 
     WT = "\t".join(WT_list.split(","))+"\t"
 
@@ -81,8 +88,12 @@ def main(WT_list,pre_amino_dict,post_amino_dict,out_file = "1"):
             Enrichment_dict[key] = 0
 
     Preference_dict = {}
-    for key in Enrichment_dict.keys():
-        Preference_dict[key] = calculatePreference(Enrichment_dict,key)
+    if add_column:
+        for key in Enrichment_dict.keys():
+            Preference_dict[key] = [calculatePreference(Enrichment_dict,key),calculatePreference(Enrichment_dict,key) * (len(Enrichment_dict)/1) ]
+    else:
+        for key in Enrichment_dict.keys():
+            Preference_dict[key] = calculatePreference(Enrichment_dict,key)
 
 
 
@@ -100,9 +111,10 @@ def main(WT_list,pre_amino_dict,post_amino_dict,out_file = "1"):
         """
 
     print(out_file,len(out_file))
+    print(Preference_dict)
     if len(out_file) > 0:
         print("run")
-        return write_out_file(out_file, Preference_dict,[[1]])
+        return write_out_file(out_file, Preference_dict,[[1]],add_column)
     else:
         return Preference_dict
 
