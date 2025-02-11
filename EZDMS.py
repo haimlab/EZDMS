@@ -111,6 +111,10 @@ def start_flask():
 		# Render a custom error page for invalid input
 		return render_template('error.html', message=str(error)), 400
 
+	@app.route('/acknowledgement')
+	def acknowledgement():
+		# This can be a page where users can download files
+		return render_template('acknowledgement_page.html')
 	
 	@app.route('/contact')
 	def contact():
@@ -204,7 +208,7 @@ def start_flask():
 
 def start_gui():
     # Start the webview window after Flask is started.
-    webview.create_window("FQ Search", 'http://127.0.0.1:5000/startpage', js_api=JSAPI(), width=200, height=200)
+    webview.create_window("EZDMS", 'http://127.0.0.1:5000/startpage', js_api=JSAPI(), width=200, height=200)
     webview.start()
 
 if __name__ == '__main__':

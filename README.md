@@ -1,118 +1,78 @@
+# EZDMS 
+
+EZDMS is a python-based GUI to help in preforming ressearch mutated plasmid libraries. 
+
+## Installation 
+
+you can download the this package from git hub (https://github.com/haimlab/EZDMS)
+ 
 Requirements: 
-
-Python >= 3.7 
-
- small change
-
-This code searches for variable sites within fastq files and returns the frequency of each combination of amino acids from all variable sites within each sequence. 
-
-Inputs: 
-
--fasta: The path to a reference fasta file that should contain the complete nucleotide sequence. The expected variable sites must be marked in this file as any non standard nucleotide including N,X,-,?. Anything in the fasta Sequence that is not an A,C,T,G will be detected as a variable site. 
-
--fastq: The path to the fastq file to be analyzed.  
-
-This function will take in a single dna sequence in fasta format and return the begging site and end site in a variable region.  
-
-Command line options: 
-
--h, --help show this help message and exit 
-
--o OUTPUT, --output OUTPUT 
-
-Path to the output file: default="output" 
-
--p PHREAD, --phread PHREAD 
-
-Threshold value to filliter phread score: default=20 
-
--5 FIVE_PRIME, --five_prime FIVE_PRIME 
-
-distance from variability sites to the 5-prime end of the required match: default=8 
-
--3 THREE_PRIME, --three_prime THREE_PRIME 
-
-distance from variability sites to the 3-prime end of the required match: default=8 
-
--v VARIABLE, --variable VARIABLE 
-
-number of variable sites: default=2 
-
+ 
+**Python >= 3.7** 
+ 
+**webview**
+ 
+**Flask**
+ 
+**flask_cors** 
+ 
+**requests**
+ 
+Before running the code, you will need to install the requirements of EZDMS. If you do not have these libraires you can install them using the pip commands bellow. 
  
 
+```bash
+    pip install pywebview
+    pip install Flask 
+    pip install flask_cors  
+    pip install requests 
+```
+
+## Running
+
+To run EZDMS after use: 
+```bash 
+Python EZDMS.py 
+``` 
  
+This will open the GUI program. 
 
- To measure how the selective pressure from Temsavir affects amino acid preference in HIV Env, AD8 plasmids were mutated to contain variable sites at site 375 and 426. These sites were chosen due to their high rate of mutation in response to Temsavir. Overlap PCR was used to generate the two NNK sites, and a homologous barcode sequence was inserted to differentiate WT plasmids from Mutant plasmids. The resulting mutant plasmid library was sequenced using Oxford nano pore technology to generate a fastq file. The fastq library was interpreted using EZDMS Amino Count tool which matches the nucleotides flanking a variable site in barcoded sequences to confirm an even distribution of amino acids at the expected NNK sites.  
+![title](static/EZDMS_START_PAGE_SCREEN_SHOT.png)
 
-293 T Cells were transformed using mutant plasmid library to act as a source of HIV virions. These virions are produced from multiple plasmids and cannot be used to test the fitness of any induvial plasmid strain but were sequence and analyzed with EZDMS Amino ACID count to ensure there was an adequate number of mutant plasmids with evenly distributed amino acids. The first round of transfection has an even distribution of amino acids as multiple plasmids are in each cell allowing unfit genes to be passed on in fit capsids.  
+You can exit the program by closing this window. 
 
-Round two of transfection was performed with a Low MOI viral passage was on A3R5.7 T-cells to dilute the plasmid so that each cell would only being infected once. Each cell only being infected once the produced capsid should match the genotype, they contain allowing for selective pressures to eliminate unfit mutations. Four days after infection the HIV RNA was extracted and sequenced with Oxford nano pore technology.  
-
-Amino Acid Preferences are then calculated using EZDMS utilizing the fastq sequences from round 1 as the preselection library and the fastq sequences from round 2 as the post selection library section library. The Enrichment Ratio  
-𝜑𝑝
-𝜑
-p
+You can move to the main page of the program by pressing the Go EZDMS button. 
  
- for amino acid ‘
-𝑦 
-y
+![title](static/Main_page_screen_shot.png) 
  
- 
-’ and a wildtype amino acid of ‘
-𝑤𝑡 
-w
-t
- 
- 
-’ is calculated as the ratio of ‘
-𝑦𝑚
-y
-m
- 
-’ to ‘
-𝑤𝑡𝑚
-w
-t
-m
- 
-’ after infection divided by the ratio of ‘
-𝑦𝑝
-y
-p
- 
-’ to ‘
-𝑤𝑡𝑝
-w
-t
-p
- 
-’ before infection.  
+This page links to all the tools on EZDMS just click on any of the icons or use the navigation bat in the top right. 
 
-The Enrichment Ratio for an amino acid at a single site is rescaled to one based on the sum of all Enrichment Ratios to generate the amino acid preference 
-𝜋𝑦
-𝜋
-y
- 
-.  
+![title](static/Nav_bar_picture.png)
 
- 
+## Variable Sites Finder
 
- 
+he primary tool of EZDMS is Variable Site Finder, which counts each mutant amino acid detected in a plasmid library. The program matches the nucleotides flanking a variable site in the library to identify the mutant amino acid. Multiple variable sites can be searched at once to count all detected amino acid combinations between variable sites. Barcode sequences can be added so each count is based only on sequences containing the specific barcode. This can be used to separate out counts from contaminated sequences from the intended library plasmid counts. This tool takes two files as inputs, a fasta reference that have the variable sites codons labeled with the nonstandard nucleotides and the fastq plasmid library. The output of the program is an excel sheet with a page for each barcode sequence and a dictionary on each page for all the amino acid combinations with the counts detected in the library.   
 
- 
+![title](static/Variable_Sites_Finder_screen_shot.png)
 
-usage: find_variable_sites.py [-h] [-o OUTPUT] [-p PHREAD] [-5 FIVE_PRIME] [-3 THREE_PRIME] [-v VARIABLE] fasta fastq 
+## Amino Acid Preferences
 
-Example command line: 
+Amino Acid Preferences is a tool to calculate the relative selective pressures for each amino acid a variable site might adopt. The program is based on the equation for the naive approach to Enrichment Ratio from dms_tools.1 The Enrichment Ratio for amino acid ‘y’ and a wild type amino acid of ‘WT’ is calculated as the ratio of ‘y’ to ‘WT’ after infection divided by the ratio of ‘y’ to ‘WT’ before infection. The Enrichment Ratio for all amino acids at a site are then rescaled to one for the final output of amino acid preferences at that site. This tool takes three files as inputs a fasta reference with variable sites codons labeled with the nonstandard nucleotides and two fastq libraires of the sequenced plasmids, the preselection libraries and the libraries sequenced after infection. The output file is a CSV file that has the preference for each amino acid labeled.   
 
-python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" -p 20 -5 8 -3 8 -v 2 
+![title](static/Variable_Sites_Finder_screen_shot.png)
 
-. .venv/bin/activate
+## Build Primer
 
- pyinstaller --onefile --windowed --add-data "templates/index.html:templates" --add-data "templates/preference.html:templates" app.py
+The final function is a basic primer template generator to create a single NNK site in a plasmid fragment. The code identifies the longest primer to be constructed to produce the NNK site with appropriate ending nucleotides and identifies all palindromic sites in a primer that could lead to self-binding. The input for this file is a fasta reference sequence for the plasmid fragment with an NNk site labeled at the codon to be mutated. The output of the tool is a text file with the 2 forward and 2 reveres primers labeled with their length and an index of all sites that are potently problematic within each primer. 
 
- pyinstaller --onefile --add-data "templates/:templates" app.py
+![title](static/Build_primer_screenshot.png)
 
- pyinstaller --onefile --add-data "templates:templates"  --add-data "modules:modules" app.py 
+## Run Modules
 
- pyinstaller --onefile --windowed --add-data "templates:templates" --icon=FGV.icns app.py 
+find_variable_sites command lines:
+
+usage: find_variable_sites.py [-h] [-o OUTPUT] [-p PHREAD] [-5 FIVE_PRIME] [-3 THREE_PRIME] [-v VARIABLE] fasta fastq
+
+Example command line:
+
+python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" -p 20 -5 8 -3 8 -v 2
