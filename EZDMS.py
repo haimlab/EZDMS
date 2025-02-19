@@ -8,11 +8,14 @@ import os
 
 import time
 
-import webview
-
-import threading
-
 import sys
+
+from pathlib import Path
+
+
+#imports
+
+import webview
 
 from flask import *
 
@@ -20,9 +23,7 @@ from flask_cors import CORS
 
 import requests
 
-from pathlib import Path
 
-import sys
 sys.path.insert(0, '/modules')
 
 import modules.find_variable_sites as FVS
@@ -126,6 +127,11 @@ def start_flask():
 		# This can be a page where users can download files
 		return render_template('Help_page.html')
 	
+	@app.route('/acknowledgement')
+	def acknowledgement():
+		# This can be a page where users can download files
+		return render_template('acknowledgement_page.html')
+	
 	@app.route('/startpage')
 	def downloads():
 		# This can be a page where users can download files
@@ -171,6 +177,9 @@ def start_flask():
 			except:
 				raise CE.FileNotFound("invalid file, please check your files")
 			
+
+			barcode_1 = request.form.get('barcode_1').split(",")
+			barcode_2 = request.form.get('barcode_2').split(",")
 			out_path = os.path.join(app.config['UPLOAD_FOLDER'],request.form.get('file_name'))
 			phread_score = int(request.form.get('phred_score'))
 			distance_5_prime = int(request.form.get('distance_5_prime'))
@@ -191,9 +200,9 @@ def start_flask():
 			file_fastq_1_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_1.filename)
 			file_fastq_2_filename = os.path.join(app.config['UPLOAD_FOLDER'],file_fastq_2.filename)
 		
-			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
+			pre_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_1_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number),barcode_1)
 
-			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number))
+			post_amino_dict = FVS.main(file_fasta_1_filename,file_fastq_2_filename,"",True,True,phread_score,distance_5_prime,distance_3_prime,int(variable_sites_number),barcode_2)
 
 			print(out_path)
 
