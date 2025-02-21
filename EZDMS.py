@@ -127,10 +127,6 @@ def start_flask():
 		# This can be a page where users can download files
 		return render_template('Help_page.html')
 	
-	@app.route('/acknowledgement')
-	def acknowledgement():
-		# This can be a page where users can download files
-		return render_template('acknowledgement_page.html')
 	
 	@app.route('/startpage')
 	def downloads():
