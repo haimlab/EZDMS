@@ -398,6 +398,7 @@ def write_out_file(out_file,amino_dic_list,region_marker_list):
     #Print out file as a excel or CSV
 
     try:
+        assert False
         import pandas as pd
         print('module pandas run')
 
@@ -437,23 +438,27 @@ def write_out_file(out_file,amino_dic_list,region_marker_list):
 
     except:
           #Print out file as a excel or CSV
-        amino_dic = amino_dic_list[0]
+        #amino_dic = amino_dic_list[0]
 
         out_file = out_file + ".csv"
 
         print(out_file)
 
         with open(out_file,"w") as f:
-            for index,item in enumerate(region_marker_list):
-                f.write(f"Site_{index+1}:" + str(item[0]))
-                f.write(",")
+            for index,amino_dic in enumerate(amino_dic_list):
+                f.write(f"BarCode_{index+1},")
+                for index,item in enumerate(region_marker_list):
+                    f.write(f"Site_{index+1}:" + str(item[0]))
+                    f.write(",")
 
-                f.write("Count")
+                    f.write("Count")
 
                 f.write("\n")
 
                 for key in amino_dic.keys():
                     f.write(",".join(key.split("\t")) +str(amino_dic[key]) +"\n")
+
+                f.write("\n")
 
             f.close
 

@@ -72,7 +72,7 @@
 				<h2>Amino Acid Preference</h2>
 				<p>The <strong>Find Amino Acid Preference</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
 
-                <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site. It normalizes the mutations against the wild-type sequences for accurate analysis. The output format is an excel file with the normalized amino acid prefrences.</p>
+                <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site. It normalizes the mutations against the wild-type sequences for accurate analysis. The output format is an excel file with the normalized amino acid preferences.</p>
 				<ul>
 					<li><strong>Reference Sequence (.fasta)</strong>
 						<p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library. The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format. The rest of the Reference Sequence should match the original plasmid sequence the library is based off of. This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library.</p>

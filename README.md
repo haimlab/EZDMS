@@ -26,6 +26,7 @@ Before running the code, you will need to install the requirements of EZDMS. If 
     pip install Flask 
     pip install flask_cors  
     pip install requests 
+    pip install numpy
 ```
 
 ## Running

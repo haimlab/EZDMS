@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 <!-- {% block title %}Acknowledgement{% endblock %} -->
+ 
 
 {% block content %}
 <!-- <script src="scripts/scripts.js"></script> -->
@@ -10,6 +11,99 @@
             <h1 class="page-title">Acknowledgement</h1>
         </div>
     </div>
+<body>
+    <div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
+        <div   class="box2" >
+            <div class="section">
+                <div class="file-container2">
+                    <!-- Input files -->
+                    <a href="/find_variable_sites" style="text-decoration: none;">
+                    <div class="file-box2 input-file" onclick="window.location.href='newpage.html';">
+                        <img src="static/EZDMS.png"   id="EZDMS" alt="FASTA_REF" />
+                        <p><b>Variable Sites</b></p>
+                        <br>
+                    </div>
+                    </a>
+                    <a href="/preference" style="text-decoration: none;">
+                    <div class="file-box2 input-file">
+                        <img src="static/Preferences.png" d id="Preferences" alt="FASTQ" />
+                        <p><b>Amino Acid Preference</b></p>
+    
+                        <br> 
+                    </div>
+                    </a>
+                    <!-- Output file -->
+                    <a href="/build_primer" style="text-decoration: none;">
+                    <div class="file-box2 output-file">
+                        <img src="static/Build_primer_800.png" id="Build_primer" alt="EXCEL_FILE" />
+                        <p><b>Primer</b></p>
+                        <br>
+                    </div>
+                    </a>
+                    <a href="/static/Variable_Sites_BNKWKD.xlsx" style="text-decoration: none;">
+                        <div class="file-box2 output-file">
+                            <img src="static/EXCEL.png" id="Build_primer" alt="EXCEL_FILE" />
+                            <p><b>Variable Sites EXCEL out put</b></p>
+                            <br>
+                        </div>
+                        </a>
+                    <a href="/static/Preferences_ref.csv" style="text-decoration: none;">
+                        <div class="file-box2 output-file">
+                            <img src="static/Amino_Acid_Preference.png" id="Build_primer" alt="CSV_FILE" />
+                            <p><b>Preference CSV out put</b></p>
+                            <br>
+                        </div>
+                        </a>
+                    <a href="/static/Ref_375X_primer.txt" style="text-decoration: none;">
+                        <div class="file-box2 output-file">
+                            <img src="static/Primer.png" id="Build_primer" alt="TXT_FILE" />
+                            <p><b>Primer TXT out put</b></p>
+                            <br>
+                        </div>
+                        </a>
+    
+                </div>
+            </div>
+    </div>
 
 
+    <div  cladss="box2">
+        <div class="section-below">
+            <section>
+                <h2>EZDMS has been brought to you by</h2>
+                <ul>
+                    <p>DR. Hillel Haim Head of the Haim Lab.</p>
+
+                    <p>Sam McCarthy-Potter lead programmer.</p>
+
+                    <p>Rohith Rao Vujjini main HTTML developer.</p>
+
+                    <p>DR. Aaron Gilman for his molecular biology expertise and protocal design.</p>
+
+                    <p>Madeline Broghammer and Cassian Birler for technical assistance.</p>
+
+
+
+                </ul>
+                    <p>This work was supported in part by NIH grant R01AI170205</p>
+
+                <p>
+                    Without your contributions, this project would not have been possible. 
+                    <br>
+                    We are truly grateful for your efforts and dedication.
+                </p>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 Haim Lab.</p>
+            </footer>
+        </body>
+        </html>
+    </div>
+</div>
+
+
+
+    
+</div>
 {% endblock %}

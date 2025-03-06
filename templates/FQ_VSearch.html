@@ -25,7 +25,7 @@
                     <span class="error" style="display:none;color:red;">Only accepts .fastq format.</span><br><br>
                     
                     <label for="lname">Output file name:</label>
-                    <input type="text" id="file_name" name="file_name" placeholder="Type your output file name"><br><br>
+                    <input type="text" id="file_name" name="file_name" value="output_file_name"><br><br>
             
                     <label for="lname"> Number of matching nucleotides 5 prime:</label>
                     <input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>
@@ -112,7 +112,9 @@
                     <li><strong>(Optional) Barcode Check</strong>
                         <p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis. If multiple Bar codes are placed below in a comma separated list the program will create a separate Excel tab in the output file with each tab only accounting for sequences that match the barcode.
                             
-                            Example (ATTGGCC,TTGGCCCC,TTTTTAAG). </p>
+                            Example (ATTGGCC,TTGGCCCC,TTTTTAAG). 
+                        
+                        </p>
                     </li>
                 </ul>
             </div>
