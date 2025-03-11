@@ -4,7 +4,13 @@ EZDMS is a python-based GUI to help in preforming ressearch mutated plasmid libr
 
 ## Installation 
 
-you can download the this package from git hub (https://github.com/haimlab/EZDMS)
+you can download the this package from git hub (https://github.com/haimlab/EZDMS).
+
+An executable form of the program is in the executables file. 
+
+These can be run as an application simply download and open.
+
+
  
 Requirements: 
  
