@@ -3,62 +3,45 @@
 <!-- {% block title %}Home Page{% endblock %} -->
 
 {% block content %}
-<div class="container-help">
-    <div class="help-box">
-        <h2>EZDMS</h2>
-        
-        <p>
-            <b>Easy DMS</b> This is a Graphical user interface designed with tools to help create and interpret mutant plasmid libraires.
-            <br>
-            
-            First Variable sites count the number of amino acid located in a fastq file and all the frequency of each combination of multiple variable sites. 
-
-            <br>
-
-            Second Preferences calculates the enrichment ratio of the amino acids in the libraries after they are placed under selective pressure. 
-            
-            <br>
-            
-            Finaly Build primers assistants in generating the basic primers required to make these mutant plasmid libraries. 
-
-            <br>
-
-            Please click on one of the tools below to get started.
-            
-
+<div class="home-title-container">
+    <div class="home-inner-title">
+        <h1 class="main-title">EZ-DMS</h1>
+        <p class="subtitle">
+            Software Package for Deep Mutational Scanning of Virus Proteins.
         </p>
     </div>
 </div>
-<div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
-    <div   class="box2" >
-        <div class="section">
-            <div class="file-container2">
+
+
+<div class="home-toolsbox" style="display: flex; flex-direction: column; flex-grow: 1;">
+    
+    <div   class="home-box2" >
+        <div class="tools-section">
+            <div class="home-file-container">
                 <!-- Input files -->
                 <a href="/find_variable_sites" style="text-decoration: none;">
-                <div class="file-box2 input-file" onclick="window.location.href='newpage.html';">
+                <div class="home-box input-file" onclick="window.location.href='newpage.html';">
                     <img src="static/EZDMS.png"   id="EZDMS" alt="FASTA_REF" />
                     <p><b>Variable Sites</b></p>
                     <br>
                     <p>
-                        This tool processes a FASTQ library and generates an Excel spreadsheet with the counts of all combinations of variable sites detected.
-                    </p>
+                        Process FASTQ files to generate a Excel file for the counts of amino acid combinations.</p>
                 </div>
                 </a>
                 <a href="/preference" style="text-decoration: none;">
-                <div class="file-box2 input-file">
+                <div class="home-box input-file">
                     <img src="static/Preferences.png" d id="Preferences" alt="FASTQ" />
                     <p><b>Amino Acid Preference</b></p>
 
                     <br> 
 
-                    <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site.
-                    </p>
+                    <p>Determine amino acid preferences between an input and a output data set relative to wildtype.</p>
                     
                 </div>
                 </a>
                 <!-- Output file -->
                 <a href="/build_primer" style="text-decoration: none;">
-                <div class="file-box2 output-file">
+                <div class="home-box input-file">
                     <img src="static/Build_primer_800.png" id="Build_primer" alt="EXCEL_FILE" />
                     <p><b>Build Primer</b></p>
                     <br>
@@ -66,20 +49,39 @@
                         The tool creates the 4 primers needed to create a plasmid library from a reference sequence in a text file (txt).</p>
                 </div>
                 </a>
-
-                <!-- Output file -->
-                <a href="/acknowledgement" style="text-decoration: none;">
-                    <div class="file-box2 output-file">
-                        <img src="static/Ackn.png" id="Ackn.png" alt="EXCEL_FILE" />
-                        <p><b>Build Primer</b></p>
-                        <br>
-                        <p>
-                            The tool creates the 4 primers needed to create a plasmid library from a reference sequence in a text file (txt).</p>
-                    </div>
-                </a>
+                
             </div>
         </div>
 </div>
+
+<div class="ack-container">
+    <div class="ack-background">
+        <div class="ack-inner">
+            <h2>Acknowledgements</h2>
+            <ul class="ack-list">
+                <li>Dr. Aaron Gilman, Research Scientist</li>
+                <li>Sam McCarthy-Potter, Computer Scientist</li>
+                <li>Rohith Rao Vujjini, Computer Scientist</li>
+                <li>Madeline Broghammer Research Technician</li>
+                <li>Cassian Birler, Research Technician</li>
+                <li>Dr. Hillel Haim, Principal Investigator Haim Lab, University of Iowa</li>
+            </ul>
+            <p class="ack-grant">
+                This work was supported in part by NIH grant R01AI170205.
+            </p>
+            <p class="ack-grant">
+                For Correspondence, contact Dr. Hillel Haim at Hillel-haim@uiowa.edu
+                
+            </p>
+        </div>
+    </div>
+    
+</div>
+
+
+
+
+
 
 
 {% endblock %}

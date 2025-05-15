@@ -124,8 +124,3 @@ def main(input_fasta_file,Out_path):
                 f.write(str(x)+" "+str(index)+" "+str(RP2_list_problem.index(''.join(reverse_complement(x)))))
 
     return Out_path
-if __name__ == '__main__':
-
-    Out_path = "1.txt"
-
-    main("/Volumes/rdss_hhaim/LAB PROJECTS/Sam/FQ_VSearch/uploads/test_fasta.fa",Out_path)
