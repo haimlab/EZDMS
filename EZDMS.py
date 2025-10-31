@@ -126,6 +126,11 @@ def start_flask():
 	def help():
 		# This can be a page where users can download files
 		return render_template('Help_page.html')
+
+	@app.route('/home_page')
+	def home_page():
+		# Render your home page template or return a response
+		return render_template('home_page.html')
 	
 	
 	@app.route('/startpage')

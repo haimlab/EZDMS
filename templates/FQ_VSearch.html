@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-<!-- {% block title %}Variable Sites{% endblock %} -->
-
 <script src="scripts/scripts.js"></script>
 {% block content %}
 <div class="title-container">
@@ -13,185 +11,142 @@
 <div class="container">
     <!-- Box 1 -->
     <div class="box">
-        <div class="center-form" >
+        <div class="center-form">
             <form method="post" enctype="multipart/form-data">
                 <div class="center">
-                    <label for="fastaFile">Reference sequence (.fasta):</label>
-                    <input type="file" id="fastaFile" name="file1" accept=".fasta,.fa" value="/Users/smccarthypotter/FQ_VSearch/static/Ref_375X.fa"/>
+                    <label for="fastaFile">Reference Sequence (.fasta):</label>
+                    <input type="file" id="fastaFile" name="file1" accept=".fasta,.fa"/>
                     <span class="error" style="display:none;color:red;">Only accepts .fasta or .fa formats.</span>
                     <br><br>
-                    <label for="fastqFile">Data sequence (.fastq):</label>
+                    <label for="fastqFile">Data Sequence (.fastq):</label>
                     <input type="file" id="fastqFile" name="file2" accept=".fastq" />
-                    <span class="error" style="display:none;color:red;">Only accepts .fastq format.</span><br><br>
-                    
-                    <label for="lname">Output file name:</label>
-                    <input type="text" id="file_name" name="file_name" value="output_file_name"><br><br>
-            
-                    <label for="lname"> Number of matching nucleotides 5 prime:</label>
+                    <span class="error" style="display:none;color:red;">Only accepts .fastq format.</span>
+                    <br><br>
+                    <label for="file_name">Output File Name:</label>
+                    <input type="text" id="file_name" name="file_name" placeholder="Name of Output File"><br><br>
+                    <label for="distance_5_prime">Number of Matching Nucleotides 5 Prime:</label>
                     <input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>
-                    <label for="lname">Number of matching nucleotides 3 prime:</label>
+                    <label for="nucleotide_match">Number of Matching Nucleotides 3 Prime:</label>
                     <input type="number" id="nucleotide_match" name="nucleotide_match" value="8" min="0" max="99"><br><br>
-            
-                    <label for="fname">Phred score threshold:</label>
+                    <label for="phred_score">Phred Score Threshold:</label>
                     <input type="number" id="phred_score" name="phred_score" value="20" min="0" max="99"><br><br>
-            
-                    <label for="fname">Number of variable sites:</label>
+                    <label for="variable_sites_number">Number of Variable Sites:</label>
                     <input type="number" id="variable_sites_number" name="variable_sites_number" value="1" min="1" max="50"><br><br>
-            
-                    <label for="lname">(optional) barcode check:</label>
+                    <label for="barcode">Barcode Check: (optional)</label>
                     <input type="text" id="barcode" name="barcode" value=""><br><br>
                 </div>
-                
                 <button type="submit" class="submit-btn">Submit</button>
             </form>
         </div>
     </div>
-    
 
     <!-- Box 2 -->
     <div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
-        <div   class="box2" >
+        <div class="box2">
             <div class="section">
-                <h2>Sample Files</h2>
+                <h2>Single Variable sites (samples)</h2>
                 <div class="file-container">
-                    <!-- Input files -->
                     <div class="file-box input-file">
-                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" alt="FASTA_REF" />
-                        <p>FASTA Ref</p>
+                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_singles" alt="FASTA_REF" />
+                        <p>Ref Sequence</p>
                     </div>
                     <div class="file-box input-file">
-                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="BNKWKD_3_Library_375X.fastq" alt="FASTQ" />
-                        <p>FASTQ File</p>
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq_singles" alt="FASTQ" />
+                        <p>Data Sequence</p>
                     </div>
-                    <!-- Output file -->
                     <div class="file-box output-file">
-                        <img src="static/EXCEL.png" draggable="true" ondragstart="drag(event)" id="Variable_Sites_BNKWKD.xlsx" alt="EXCEL_FILE" />
+                        <img src="static/EXCEL.png" draggable="true" ondragstart="drag(event)" id="Output_singles" alt="EXCEL_FILE" />
                         <p>Excel Output</p>
                     </div>
                 </div>
             </div>
-        <div  cladss="box2">
+            <div class="section">
+                <h2>Double Variable Sites (samples)</h2>
+                <div class="file-container">
+                    <div class="file-box input-file">
+                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_doubles" alt="FASTA_REF" />
+                        <p>Ref Sequence</p>
+                    </div>
+                    <div class="file-box input-file">
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq_doubles" alt="FASTQ" />
+                        <p>Data Sequence</p>
+                    </div>
+                    <div class="file-box output-file">
+                        <img src="static/EXCEL.png" draggable="true" ondragstart="drag(event)" id="Output_doubles" alt="EXCEL_FILE" />
+                        <p>Excel Output</p>
+                    </div>
+                </div>
+            </div>
             <div class="section-below">
                 <h2>Variable Sites</h2>
-                <p>The <strong>Find Variable Sites</strong> tool requires eight input parameters. Below is a detailed explanation of each input:</p>
-
-                <p>
-                    This tool processes a FASTQ library and generates an Excel spreadsheet with the counts of all combinations of variable sites detected. Sequences can also be further subdivided using the barcode option, which creates an additional tab in the spreadsheet that counts only the sequences containing the specified barcode.</p>
+                <p>The <strong>Find Variable Sites</strong> tool generates Excel (.xlsx) spreadsheet with the counts of all amino acid combinations for the variable sites. </p>
                 <ul>
                     <li><strong>Reference Sequence (.fasta)</strong>
-                        <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library.  
-                            The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format.  
-                            The rest of the Reference Sequence should match the original plasmid sequence the library is based off of.  
-                            This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). 
-                            Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library. 
-                        </p>
+                        <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file should be the sequencing amplicon reference sequence. The reference sequence must include variable sites, which are marked using any non-standard codon, such as NNN, NNK, or XXX.</p>
                     </li>
                     <li><strong>Data Sequence (.fastq)</strong>
-                        <p>This is the fastq file containing sequencing data from a plasmid library. 
-                            The library should be derived from the reference sequence (provided above).  
-                            The tool will use this file to compare against the reference to identify variable sites. 
-                            The program cycles through the library twice for each variable site first identifying all forward strands to the reference sequence then taking the reverse complement of the reference sequence to match to the library. 
-                            Be careful that the guide sequences used in the reference sequence reverse complement are not present anywhere on the forward strand. If this is unavoidable you can expand the range of sites, the program uses to identify variable sites or add a barcode sequence (see below). 
-                        </p>
+                        <p>This is the fastq file containing sequencing data from a sequenced amplicon. The library should be derived from the reference sequence (provided above). The tool will use this file to compare against the reference to identify variable sites for both the forward and reverse complement sequences.</p>
                     </li>
                     <li><strong>Output File Name</strong>
-                        <p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification. The file will be created in the Excel format (.xlsx).</p>
+                        <p>Enter the desired name for the output file. The file will be created in the Excel format (.xlsx).</p>
                     </li>
                     <li><strong>Number of Matching Nucleotides (5' End)</strong>
-                        <p>This value specifies how many nucleotides, starting from the 5' end of variable the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
+                        <p>Specifies how many nucleotides, starting from the 5' end of variable site need to match the reference sequence. Any site that does not match the sequence will be discarded.</p>
                     </li>
                     <li><strong>Number of Matching Nucleotides (3' End)</strong>
-                        <p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
+                        <p>Specifies how many nucleotides, starting from the 3' end of variable site need to match the reference sequence. Any site that does not match the sequence will be discarded.</p>
                     </li>
                     <li><strong>Phred Score Threshold</strong>
-                        <p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable. If the optional barcode option is used the barcode will use this Phred score value. </p>
+                        <p>Minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding sequence will be discarded as unreliable. If the optional barcode option is used, the barcode will also use this Phred score value.</p>
                     </li>
                     <li><strong>Number of Variable Sites</strong>
                         <p>This field specifies the expected number of variable sites in the reference sequence. If the number of variable sites detected does not match this expectation, the program will return an error, indicating a mismatch.</p>
                     </li>
-                    <li><strong>(Optional) Barcode Check</strong>
-                        <p>If you provide a nucleotide barcode in this field, the program will filter out any sequences that do not contain the specified barcode. This is useful for ensuring that only sequences with the correct barcode are considered in the analysis. If multiple Bar codes are placed below in a comma separated list the program will create a separate Excel tab in the output file with each tab only accounting for sequences that match the barcode.
-                            
-                            Example (ATTGGCC,TTGGCCCC,TTTTTAAG). 
-                        
-                        </p>
+                    <li><strong>Barcode Check (Optional)</strong>
+                        <p>For multiplexing include a unique sequence barcode. The program will filter out any sequences that do not contain the specified barcode. The data sequence file can be re-run with multiple barcodes.</p>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
-</div>
-</div>
 
 <script>
-    // Links for the images (can be different files or URLs)
-     const fileLink1 = 'static/BNKWKD_3_Library_375X.fastq';  // Replace with the link to the first file
-     const fileLink2 = 'static/Ref_375X.fa'; // Replace with the link to the second file
-     const fileLink3 = 'static/Variable_Sites_BNKWKD.xlsx';
-     // Image 1 (drag1) click handler to open the file in a new tab
-     document.getElementById('BNKWKD_3_Library_375X.fastq').addEventListener('click', function() {
-       window.open(fileLink1, '_blank');  // Opens the first file in a new tab
-     });
- 
-     // Image 2 (drag2) click handler to open the file in a new tab
-     document.getElementById('Ref_375X.fa').addEventListener('click', function() {
-       window.open(fileLink2, '_blank');  // Opens the second file in a new tab
-     });
+    // Sample file links for each image
+    const fileLinks = [
+        { id: 'Ref_singles',       link: 'static/Singles/Variable Site/Ref_Var_Singles.fasta' },
+        { id: 'Data_Seq_singles',  link: 'static/Singles/Variable Site/Var_Data_Seq_Singles.fastq' },
+        { id: 'Output_singles',    link: 'static/Singles/Variable Site/Output_Var_Singles.xlsx' },
+        { id: 'Ref_doubles',       link: 'static/Doubles/Variable Site/Ref_Var_Doubles.fasta' },
+        { id: 'Data_Seq_doubles',  link: 'static/Doubles/Variable Site/Var_Data_Seq_Doubles.fastq' },
+        { id: 'Output_doubles',    link: 'static/Doubles/Variable Site/Output_Var_Doubles.xlsx' }
+    ];
 
-          // Image 2 (drag2) click handler to open the file in a new tab
-    document.getElementById('Variable_Sites_BNKWKD.xlsx').addEventListener('click', function() {
-       window.open(fileLink3, '_blank');  // Opens the second file in a new tab
-     });
+    document.addEventListener('DOMContentLoaded', function() {
+        fileLinks.forEach(({id, link}) => {
+            const el = document.getElementById(id);
+            if (el) {
+                let isDragging = false;
+                el.addEventListener('mousedown', () => { isDragging = false; });
+                el.addEventListener('mousemove', () => { isDragging = true; });
+                el.addEventListener('click', (e) => {
+                    if (!isDragging) window.open(link, '_blank');
+                    isDragging = false;
+                });
+                el.addEventListener('dragstart', drag);
+            }
+        });
+    });
 
-     
- 
-     let isDragging = false;
- 
-     // Detect if user is dragging or clicking
-     img.addEventListener('mousedown', () => {
-       isDragging = false;  // Assume it's a click initially
-     });
- 
-     img.addEventListener('mousemove', () => {
-       isDragging = true;  // It's a drag if mouse moves
-     });
- 
-     // If it's not a drag, open the file in a new tab
-     img.addEventListener('click', (e) => {
-       if (isDragging) {
-         e.preventDefault();  // Prevent the default click action if it's a drag
-         isDragging = false;
-       } else {
-         openFileInNewTab(fileUrl);
-       }
-     });
- 
-     // Function to open the file in a new tab
-     function openFileInNewTab(url) {
-       window.open(url, '_blank');  // Open the file URL in a new tab
-     }
- 
-     function drag(ev) {
-       ev.dataTransfer.setData("text", ev.target.id);  // Store image ID during drag
-     }
- 
-     // Function to allow the drop on the target divs or text input
-     function allowDrop(ev) {
-       ev.preventDefault();  // Allow the drop
-     }
- 
-     // Function to handle the drop event
-     function drop(ev) {
-       ev.preventDefault();  // Prevent default drop behavior
- 
-       var data = ev.dataTransfer.getData("text");  // Get the dragged element ID
-       var draggedElement = document.getElementById(data);
- 
-       // Append the dragged image to the target div
-       ev.target.appendChild(draggedElement);
- 
-       // Check if the drop target is the text input field
-     }
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        ev.target.appendChild(draggedElement);
+    }
 </script>
 {% endblock %}

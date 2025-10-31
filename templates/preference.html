@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-<!-- {% block title %}Preference{% endblock %} -->
-
 {% block content %}
 
 <div class="title-container">
@@ -9,265 +7,190 @@
         <h1 class="page-title">Preferences</h1>
     </div>
 </div>
-    <!-- Container for the two boxes -->
-    <div class="container" >
-        <!-- Box 1 -->
-        <div class="box">
-			<div class="center-form">
-				<form method="post" enctype="multipart/form-data">
-					<div class="center">
-                        <label for="fname" >Reference sequence(.fasta):</label>
-                        <input type="file" id="files" name="file_fasta_1" accept=".fasta,.fa"/><br><br>
-                        <label for="fname">Data sequence 1(.fastq):</label>
-                        <input type="file" id="files" name="file_fastq_1" accept=".fasta,.fa"/><br><br>
-                
-                        <label for="fname">Data sequence 2(.fastq):</label>
-                        <input type="file" id="files" name="file_fastq_2" accept=".fastq"/><br><br>
-                
-                        <label for="lname"> Number of matching nucleotides 5 prime:</label>
-                        <input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>
-                        
-                        <label for="lname">Number of matching nucleotides 3 prime:</label>
-                        <input type="number" id="nucleotide_match" name="nucleotide_match" value="8" min="0" max="99"><br><br>
-                
-                        <label for="fname">Phred score threshold:</label>
-                        <input type="number" id="phred_score" name="phred_score" value="20" min="0" max="99"><br><br>
-                
-                        <label for="lname">Output file name:</label>
-                        <input type="text" id="file_name" name="file_name" value="your_out_put_file"><br><br>
 
-                        <label for="fname">Number of variable sites:</label>
-                        <input type="number" id="variable_sites_number0" name="variable_sites_number0" value="1" min="1" max="50"><br><br>
+<div class="container">
+    <!-- Box 1 -->
+    <div class="box">
+        <div class="center-form">
+            <form method="post" enctype="multipart/form-data">
+                <div class="center">
+                    <label for="file_fasta_1">Reference sequence (.fasta):</label>
+                    <input type="file" id="file_fasta_1" name="file_fasta_1" accept=".fasta,.fa"/><br><br>
 
-                        
-                        <br>
+                    <label for="file_fastq_1">Data sequence 1 (.fastq):</label>
+                    <input type="file" id="file_fastq_1" name="file_fastq_1" accept=".fastq"/><br><br>
 
-                        <label for="letter_selection">Wild type amino acid site 1:</label>
-                        <select id="wild_type_amino_acid_1" name="wild_type_amino_acid_1">
-                            <option value=".">.</option>
-                            <option value="A">A</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                            <option value="G">G</option>
-                            <option value="H">H</option>
-                            <option value="I">I</option>
+                    <label for="file_fastq_2">Data sequence 2 (.fastq):</label>
+                    <input type="file" id="file_fastq_2" name="file_fastq_2" accept=".fastq"/><br><br>
 
-                            <option value="K">K</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="N">N</option>
+                    <label for="distance_5_prime">Number of matching nucleotides 5 prime:</label>
+                    <input type="number" id="distance_5_prime" name="distance_5_prime" value="8" min="0" max="99"><br><br>
 
-                            <option value="P">P</option>
-                            <option value="Q">Q</option>
-                            <option value="R">R</option>
-                            <option value="S">S</option>
-                            <option value="T">T</option>
+                    <label for="nucleotide_match">Number of matching nucleotides 3 prime:</label>
+                    <input type="number" id="nucleotide_match" name="nucleotide_match" value="8" min="0" max="99"><br><br>
 
-                            <option value="V">V</option>
-                            <option value="W">W</option>
-                            <option value="X">X</option>
-                            <option value="Y">Y</option>
+                    <label for="phred_score">Phred score threshold:</label>
+                    <input type="number" id="phred_score" name="phred_score" value="20" min="0" max="99"><br><br>
 
-                        </select>
+                    <label for="file_name">Output file name:</label>
+                    <input type="text" id="file_name" name="file_name" placeholder="Name of Output File"><br><br>
 
+                    <label for="variable_sites_number0">Number of variable sites:</label>
+                    <input type="number" id="variable_sites_number0" name="variable_sites_number0" value="1" min="1" max="50"><br><br>
 
-                        <br>
-                        <br>
-                        <br>
+                    <label for="wild_type_amino_acid_1">Wild type amino acid site 1:</label>
+                    <select id="wild_type_amino_acid_1" name="wild_type_amino_acid_1">
+                        {% set amino_acids = [".", "A", "C", "D", "E", "F", "G", "H", "I", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "V", "W", "X", "Y"] %}
+                        {% for aa in amino_acids %}
+                            <option value="{{ aa }}">{{ aa }}</option>
+                        {% endfor %}
+                    </select>
+                    <br><br><br>
 
-                        <label for="letter_selection_1"> Wild type amino acid site 2 (optional):</label>
-                        <select id="wild_type_amino_acid_2" name="wild_type_amino_acid_2">
-                            <option value=".">.</option>
-                            <option value="A">A</option>
-                            <option value="C">C</option>
-                            <option value="D">D</option>
-                            <option value="E">E</option>
-                            <option value="F">F</option>
-                            <option value="G">G</option>
-                            <option value="H">H</option>
-                            <option value="I">I</option>
+                    <label for="wild_type_amino_acid_2">Wild type amino acid site 2 (optional):</label>
+                    <select id="wild_type_amino_acid_2" name="wild_type_amino_acid_2">
+                        {% for aa in amino_acids %}
+                            <option value="{{ aa }}">{{ aa }}</option>
+                        {% endfor %}
+                    </select>
+                    <br><br>
 
-                            <option value="K">K</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="N">N</option>
+                    <label for="barcode_1">(optional) Data sequence 1 barcode check:</label>
+                    <input type="text" id="barcode_1" name="barcode_1" value=""><br><br>
 
-                            <option value="P">P</option>
-                            <option value="Q">Q</option>
-                            <option value="R">R</option>
-                            <option value="S">S</option>
-                            <option value="T">T</option>
-
-                            <option value="V">V</option>
-                            <option value="W">W</option>
-                            <option value="X">X</option>
-                            <option value="Y">Y</option>
-
-                        </select>
-                        <p></p>
-
-                        <label for="lname">(optional) Data sequence 1 barcode check:</label>
-                        <input type="text" id="barcode_1" name="barcode_1" value=""><br><br>
-
-                        <label for="lname">(optional) Data sequence 2 barcode check:</label>
-                        <input type="text" id="barcode_2" name="barcode_2" value=""><br><br>
-
-                    
-                        </div>
-
- 
-					
-				   <button type="submit" class="submit-btn" data-toggle="tooltip" data-placement="right" title="Submit Fastq file for FQ V search">Submit</button>
-				</form>
-			</div>
-        </div>
-
-        <!-- Box 2 -->
-        <div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
-            <div class="box2" >
-                <div class="section">
-                <!-- The clickable image -->
-                    <h2>Sample files</h2>
-                    <div class="file-container">
-                    <!-- Drop zones -->
-
-                    <div class="file-box input-file">
-                      <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_375X.fa" alt="FASTA_REF" />
-                      <p>FASTA Ref</p>
-                  </div>
-                  <div class="file-box input-file">
-                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq" alt="FASTQ" />
-                    <p>FASTQ File Sequence 1</p>
-                  </div>
-                  <div class="file-box input-file">
-                    <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq" alt="FASTQ" />
-                    <p>FASTQ File Sequence 2</p>
-                  </div>
-
-                  <!-- Output file -->
-                  <div class="file-box output-file">
-                      <img src="static/Amino_Acid_Preference.png" draggable="true" ondragstart="drag(event)" id="Preferences_ref.csv" alt="CSV_FILE" />
-                      <p>CSV Output</p>
-                  </div>
-              </div>
-
-
-            </div>
-            <div class="box2"  >
-                <div class="section-below">
-                    <h2>Amino Acid Preference</h2>
-                    <p>The <strong>Find Amino Acid Preference</strong> tool requires eight input parameters. Below is a detailed explanation of each:</p>
-
-                    <p>This tool compares the change in amino acid preferences between a pre-mutation and a post-mutation library at a specific site. It normalizes the mutations against the wild-type sequences for accurate analysis. The output format is an excel file with the normalized amino acid prefrences.</p>
-                    <ul>
-                        <li><strong>Reference Sequence (.fasta)</strong>
-                            <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file needs to be the reference sequence for the plasmid library. The reference sequence should include variable sites, which are marked using a non-standard codon, such as NNK or a similar format. The rest of the Reference Sequence should match the original plasmid sequence the library is based off of. This tool uses the non-standard nucleotide to locate the variable sites to be sampled (-,N,K,X. ect). Once identified it stores the nucleotides on the 5' and 3' end of the variable to identify the variables sites in the fastq library.</p>
-                        </li>
-                        <li><strong>Data Sequence 1(.fastq)</strong>
-                            <p>This is the fastq file containing sequencing data from the pre mutant plasmid library. The library should be derived from the reference sequence (provided above). The tool will use this file to compare against the reference to identify variable sites. The program cycles through the library twice for each variable site first identifying all forward strands to the reference sequence then taking the reverse complement of the reference sequence to match to the library. Be careful that the guide sequences used in the reference sequence reverse complement are not present anywhere on the forward strand. If this is unavoidable you can expand the range of sites, the program uses to identify variable sites or add a barcode sequence (see below).</p>
-                        </li>
-                        <li><strong>Data Sequence 2(.fastq)</strong>
-                            <p>This is the fastq file requires the same format as Data Sequence 1. Data Sequence 2 should be sequenced from the result of mutating the plasmids generated Data Sequence 1.</p>
-                        </li>
-                        <li><strong>Number of Matching Nucleotides (5' End)</strong>
-                            <p>This value specifies how many nucleotides, starting from the 5' end of variable the sequence, need to match the reference sequence in order for a site to be considered a variable site. Any site that does not match this exact region will be discarded.</p>
-                        </li>
-                        <li><strong>Number of Matching Nucleotides (3' End)</strong>
-                            <p>Similar to the 5' end, this value determines how many nucleotides, starting from the 3' end, must match the reference sequence to confirm the site as a variable site. Sites that do not match this region will be excluded.</p>
-                        </li>
-                        <li><strong>Phred Score Threshold</strong>
-                            <p>This threshold determines the minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding site will be discarded as unreliable. If the optional barcode option is used the barcode will use this Phred score value.</p>
-                        </li>
-                        <li><strong>Output File Name</strong>
-                            <p>Enter the desired name for the output file that will be generated after processing. This file will contain the results of the variable site identification. The file will be created in the Excel format (.xlsx).</p>
-                        </li>
-                        <li><strong>Wild type amino acid</strong>
-                            <p>Enter the wild type amino acid present at the variable site.</p>
-                        </li>
-                    </ul>
-                
+                    <label for="barcode_2">(optional) Data sequence 2 barcode check:</label>
+                    <input type="text" id="barcode_2" name="barcode_2" value=""><br><br>
                 </div>
+                <button type="submit" class="submit-btn" data-toggle="tooltip" data-placement="right" title="Submit Fastq file for FQ V search">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box-right" style="display: flex; flex-direction: column; flex-grow: 1;">
+        <div class="box2">
+            <div class="section">
+                <h2>Single Variable Sites (samples)</h2>
+                <div class="file-container">
+                    <div class="file-box input-file">
+                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_singles" alt="FASTA_REF" />
+                        <p>Ref Sequence</p>
+                    </div>
+                    <div class="file-box input-file">
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq1_singles" alt="FASTQ" />
+                        <p>Data Sequence 1</p>
+                    </div>
+                    <div class="file-box input-file">
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq2_singles" alt="FASTQ" />
+                        <p>Data Sequence 2</p>
+                    </div>
+                    <div class="file-box output-file">
+                        <img src="static/Amino_Acid_Preference.png" draggable="true" ondragstart="drag(event)" id="Output_singles" alt="CSV_FILE" />
+                        <p>Excel Output</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box2">
+            <div class="section">
+                <h2>Double Variable Sites (samples)</h2>
+                <div class="file-container">
+                    <div class="file-box input-file">
+                        <img src="static/FASTA_REF.png" draggable="true" ondragstart="drag(event)" id="Ref_doubles" alt="FASTA_REF" />
+                        <p>Ref Sequence</p>
+                    </div>
+                    <div class="file-box input-file">
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq1_doubles" alt="FASTQ" />
+                        <p>Data Sequence 1</p>
+                    </div>
+                    <div class="file-box input-file">
+                        <img src="static/FASTQ_3.png" draggable="true" ondragstart="drag(event)" id="Data_Seq2_doubles" alt="FASTQ" />
+                        <p>Data Sequence 2</p>
+                    </div>
+                    <div class="file-box output-file">
+                        <img src="static/Amino_Acid_Preference.png" draggable="true" ondragstart="drag(event)" id="Output_doubles" alt="CSV_FILE" />
+                        <p>Excel Output</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box2">
+            <div class="section-below">
+                <h2>Amino Acid Preference</h2>
+                <p>The <strong>Find Amino Acid Preference</strong> generates a excel file (.xlsx) for amino acid preferences between two data sets, commonly an input and output sequence. Preferences are normalized against the wildtype sequences</p>
+                <ul>
+                    <li><strong>Reference Sequence (.fasta)</strong>
+                        <p>This is a fasta file either in the (.fa) or (.fasta) format. The fasta file should be the sequencing amplicon reference sequence. The reference sequence must include variable sites, which are marked using any non-standard codon, such as NNN, NNK, or XXX.</p>
+                    </li>
+                    <li><strong>Data Sequence 1(.fastq)</strong>
+                        <p>This is the input fastq file containing sequencing data from a sequenced amplicon. The library should be derived from the reference sequence (provided above). This file is what the second, data sequence 2 file, is compared too. </p>
+                    </li>
+                    <li><strong>Data Sequence 2(.fastq)</strong>
+                        <p>Requires the same format as Data Sequence 1. The amino acid preference for Data Sequence 2 is calculated relative to Data Sequence 1.</p>
+                    </li>
+                    <li><strong>Number of Matching Nucleotides (5' End)</strong>
+                        <p>Specifies how many nucleotides, starting from the 5' end of variable site need to match the reference sequence. Any site that does not match the sequence will be discarded.</p>
+                    </li>
+                    <li><strong>Number of Matching Nucleotides (3' End)</strong>
+                        <p>Specifies how many nucleotides, starting from the 3' end of variable site need to match the reference sequence. Any site that does not match the sequence will be discarded.</p>
+                    </li>
+                    <li><strong>Phred Score Threshold</strong>
+                        <p>Minimum Phred score required for each nucleotide within the matching 5' and 3' regions. If any nucleotide has a Phred score below this threshold, the corresponding sequence will be discarded as unreliable. If the optional barcode option is used, the barcode will also use this Phred score value.</p>
+                    </li>
+                    <li><strong>Output File Name</strong>
+                        <p>Enter the desired name for the output file. The file will be created in the Excel comma separated value file format (.csv).</p>
+                    </li>
+                    <li><strong>Wild Type Amino Acid Site 1</strong>
+                        <p>Enter the wildtype amino acid present at first variable site.</p>
+                    </li>
+                    <li><strong>Wild Type Amino Acid Site 2 (Optional)</strong>
+                        <p>Enter the wildtype amino acid present at second variable site, if applicable. Do not change if only 1 variable site is present. </p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
 </div>
-    <script>
-        // Links for the images (can be different files or URLs)
-         const fileLink1 = 'static/Ref_375X.fa';  // Replace with the link to the first file
-         const fileLink4 = 'static/S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq'; // Replace with the link to the second file
-         const fileLink5 = 'static/H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq';
-         const fileLink3 = 'static/Preferences_ref.csv';
-         // Image 1 (drag1) click handler to open the file in a new tab
-         document.getElementById('Ref_375X.fa').addEventListener('click', function() {
-           window.open(fileLink1, '_blank');  // Opens the first file in a new tab
-         });
-     
-         // Image 2 (drag2) click handler to open the file in a new tab
-         document.getElementById('S375X_Lib_1_Viral Stock_RT_cDNA_Extra PCR.fastq').addEventListener('click', function() {
-           window.open(fileLink4, '_blank');  // Opens the second file in a new tab
-         });
-    
-         // Image 2 (drag2) click handler to open the file in a new tab
-         document.getElementById('H2MBPL_1_Lib1_S375X_A3R5.7_Non-Int_0.001_PCRx2.fastq').addEventListener('click', function() {
-           window.open(fileLink5, '_blank');  // Opens the second file in a new tab
-         });
 
-              // Image 2 (drag2) click handler to open the file in a new tab
-        document.getElementById('Preferences_ref.csv').addEventListener('click', function() {
-           window.open(fileLink3, '_blank');  // Opens the second file in a new tab
-         });
-    
-         
-     
-         let isDragging = false;
-     
-         // Detect if user is dragging or clicking
-         img.addEventListener('mousedown', () => {
-           isDragging = false;  // Assume it's a click initially
-         });
-     
-         img.addEventListener('mousemove', () => {
-           isDragging = true;  // It's a drag if mouse moves
-         });
-     
-         // If it's not a drag, open the file in a new tab
-         img.addEventListener('click', (e) => {
-           if (isDragging) {
-             e.preventDefault();  // Prevent the default click action if it's a drag
-             isDragging = false;
-           } else {
-             openFileInNewTab(fileUrl);
-           }
-         });
-     
-         // Function to open the file in a new tab
-         function openFileInNewTab(url) {
-           window.open(url, '_blank');  // Open the file URL in a new tab
-         }
-     
-         function drag(ev) {
-           ev.dataTransfer.setData("text", ev.target.id);  // Store image ID during drag
-         }
-     
-         // Function to allow the drop on the target divs or text input
-         function allowDrop(ev) {
-           ev.preventDefault();  // Allow the drop
-         }
-     
-         // Function to handle the drop event
-         function drop(ev) {
-           ev.preventDefault();  // Prevent default drop behavior
-     
-           var data = ev.dataTransfer.getData("text");  // Get the dragged element ID
-           var draggedElement = document.getElementById(data);
-     
-           // Append the dragged image to the target div
-           ev.target.appendChild(draggedElement);
-     
-           // Check if the drop target is the text input field
-         }
-    </script>
+<script>
+    // File links for sample file download
+    const fileLinks = [
+        { id: 'Ref_singles',       link: 'static/Singles/Preferences/Pref_Ref_Singles.fasta' },
+        { id: 'Data_Seq1_singles', link: 'static/Singles/Preferences/Pref_Data_Seq_1_Singles.fastq' },
+        { id: 'Data_Seq2_singles', link: 'static/Singles/Preferences/Pref_Data_Seq_2_Singles.fastq' },
+        { id: 'Output_singles',    link: 'static/Singles/Preferences/Output_Pref_Singles.xlsx' },
+        { id: 'Ref_doubles',       link: 'static/Doubles/Preferences/Ref_Pref_Doubles.fa' },
+        { id: 'Data_Seq1_doubles', link: 'static/Doubles/Preferences/Pref_Data_Seq_1_Doubles.fastq' },
+        { id: 'Data_Seq2_doubles', link: 'static/Doubles/Preferences/Pref_Data_Seq_2_Doubles.fastq' },
+        { id: 'Output_doubles',    link: 'static/Doubles/Preferences/Output_Pref_Doubles.xlsx' }
+    ];
+
+    document.addEventListener('DOMContentLoaded', function() {
+        fileLinks.forEach(({id, link}) => {
+            const el = document.getElementById(id);
+            if (el) {
+                let isDragging = false;
+                el.addEventListener('mousedown', () => { isDragging = false; });
+                el.addEventListener('mousemove', () => { isDragging = true; });
+                el.addEventListener('click', (e) => {
+                    if (!isDragging) window.open(link, '_blank');
+                    isDragging = false;
+                });
+                el.addEventListener('dragstart', drag);
+            }
+        });
+    });
+
+    function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+    function allowDrop(ev) { ev.preventDefault(); }
+    function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+        ev.target.appendChild(draggedElement);
+    }
+</script>
 
 {% endblock %}
