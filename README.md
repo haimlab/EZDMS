@@ -58,7 +58,7 @@ This page links to all the tools on EZDMS just click on any of the icons or use 
 
 ## Variable Sites Finder
 
-he primary tool of EZDMS is Variable Site Finder, which counts each mutant amino acid detected in a plasmid library. The program matches the nucleotides flanking a variable site in the library to identify the mutant amino acid. Multiple variable sites can be searched at once to count all detected amino acid combinations between variable sites. Barcode sequences can be added so each count is based only on sequences containing the specific barcode. This can be used to separate out counts from contaminated sequences from the intended library plasmid counts. This tool takes two files as inputs, a fasta reference that have the variable sites codons labeled with the nonstandard nucleotides and the fastq plasmid library. The output of the program is an excel sheet with a page for each barcode sequence and a dictionary on each page for all the amino acid combinations with the counts detected in the library.   
+The primary tool of EZDMS is Variable Site Finder, which counts each mutant amino acid detected in a plasmid library. The program matches the nucleotides flanking a variable site in the library to identify the mutant amino acid. Multiple variable sites can be searched at once to count all detected amino acid combinations between variable sites. Barcode sequences can be added so each count is based only on sequences containing the specific barcode. This can be used to separate out counts from contaminated sequences from the intended library plasmid counts. This tool takes two files as inputs, a fasta reference that have the variable sites codons labeled with the nonstandard nucleotides and the fastq plasmid library. The output of the program is an excel sheet with a page for each barcode sequence and a dictionary on each page for all the amino acid combinations with the counts detected in the library.   
 
 ![title](static/Variable_Sites_Finder_screen_shot.png)
 
@@ -81,5 +81,6 @@ find_variable_sites command lines:
 usage: find_variable_sites.py [-h] [-o OUTPUT] [-p PHREAD] [-5 FIVE_PRIME] [-3 THREE_PRIME] [-v VARIABLE] fasta fastq
 
 Example command line:
+
 
 python find_variable_sites.py Ref_375X BNKWKD_3_Library_375X.fastq -o "out.txt" -p 20 -5 8 -3 8 -v 2
